@@ -251,6 +251,14 @@ h2 { font-family: 'Bebas Neue',sans-serif; font-size: clamp(2.4rem,3.8vw,3.6rem)
 .map-open-link { display: inline-block; margin-top: 0.65rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; color: var(--red); text-decoration: none; }
 .map-open-link:hover { text-decoration: underline; }
 
+/* FLOATING ACTION BUTTONS */
+.fabs { position: fixed; bottom: 2rem; right: 2rem; z-index: 300; display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-end; }
+.fab { display: flex; align-items: center; gap: 0.65rem; padding: 0.75rem 1.2rem; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+.fab-msn { background: #0084FF; color: #fff; }
+.fab-msn:hover { background: #006ACC; }
+.fab-jobs { background: var(--red); color: #fff; }
+.fab-jobs:hover { background: var(--red-dark); }
+
 /* FOOTER */
 /* Footer <nav> must never use fixed header styles (older pages used nav.footer-links here) */
 footer nav:not(.site-nav) { position: static; inset: auto; z-index: auto; padding: 0; background: transparent; border: none; min-width: 0; display: flex; flex-wrap: wrap; gap: 0.65rem 1rem; justify-content: flex-end; align-items: center; }
@@ -304,6 +312,7 @@ footer { background: var(--navy); border-top: 2px solid var(--red); padding: 2.5
   .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
   .frow { grid-template-columns: 1fr; }
   .cf-row { grid-template-columns: 1fr; }
+  .fabs { bottom: 1rem; right: 1rem; }
 }
 @media (max-width: 560px) {
   .services-grid, .why-grid, .about-values { grid-template-columns: 1fr; }
