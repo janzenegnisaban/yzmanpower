@@ -231,9 +231,8 @@
 
     <div class="step-bar" id="stepBar">
       <div class="step-dot active" id="dot1"><div class="step-num">1</div><div class="step-lbl">Personal</div></div>
-      <div class="step-dot" id="dot2"><div class="step-num">2</div><div class="step-lbl">Experience</div></div>
-      <div class="step-dot" id="dot3"><div class="step-num">3</div><div class="step-lbl">References</div></div>
-      <div class="step-dot" id="dot4"><div class="step-num">4</div><div class="step-lbl">Email</div></div>
+      <div class="step-dot" id="dot2"><div class="step-num">2</div><div class="step-lbl">Requirements</div></div>
+      <div class="step-dot" id="dot3"><div class="step-num">3</div><div class="step-lbl">Email</div></div>
     </div>
 
     <div class="form-step active" id="step1">
@@ -259,64 +258,85 @@
     </div>
 
     <div class="form-step" id="step2">
-      <div class="step-title">Work Experience</div>
-      <div id="expContainer">
-        <div class="exp-entry">
-          <div class="exp-head"><div class="exp-lbl">Experience #1</div></div>
-          <div class="frow">
-            <div class="fg"><label>Company Name</label><input type="text" placeholder="Company Name"></div>
-            <div class="fg"><label>Position / Job Title</label><input type="text" placeholder="Your Role"></div>
-          </div>
-          <div class="frow">
-            <div class="fg"><label>Date Started</label><input type="month"></div>
-            <div class="fg"><label>Date Ended</label><input type="month"></div>
-          </div>
-          <div class="fg"><label>Duties &amp; Responsibilities</label><textarea placeholder="Brief description of your role and achievements..."></textarea></div>
+      <div class="step-title">Government &amp; Pre-employment Requirements</div>
+      <p class="step-sub">(Mga Dokumento para sa Trabaho — kung mayroon at kumpleto)</p>
+      <div class="req-checklist">
+        <div class="fg chk-fg">
+          <label class="chk-lbl-wrap" for="chk_sss">
+            <input type="checkbox" id="chk_sss">
+            <span><strong>SSS Number</strong><span class="chk-tl">(SSS — kung mayroon at kumpleto)</span></span>
+          </label>
+        </div>
+        <div class="fg chk-fg">
+          <label class="chk-lbl-wrap" for="chk_philhealth">
+            <input type="checkbox" id="chk_philhealth">
+            <span><strong>PhilHealth ID/Number</strong><span class="chk-tl">(PhilHealth — kung mayroon at kumpleto)</span></span>
+          </label>
+        </div>
+        <div class="fg chk-fg">
+          <label class="chk-lbl-wrap" for="chk_pagibig">
+            <input type="checkbox" id="chk_pagibig">
+            <span><strong>Pag-IBIG Number</strong><span class="chk-tl">(Pag-IBIG — kung mayroon at kumpleto)</span></span>
+          </label>
+        </div>
+        <div class="fg chk-fg">
+          <label class="chk-lbl-wrap" for="chk_tin">
+            <input type="checkbox" id="chk_tin">
+            <span><strong>TIN Number</strong><span class="chk-tl">(Tax Identification Number — kung mayroon at kumpleto)</span></span>
+          </label>
+        </div>
+        <div class="fg chk-fg">
+          <label class="chk-lbl-wrap" for="chk_clearance">
+            <input type="checkbox" id="chk_clearance">
+            <span><strong>Police Clearance / NBI Clearance</strong><span class="chk-tl">(Police o NBI Clearance — kung mayroon at valid/kumpleto)</span></span>
+          </label>
         </div>
       </div>
-      <button type="button" class="add-exp" onclick="addExp()">+ Add Another Experience</button>
-      <div class="frow" style="margin-top:1.25rem;">
-        <div class="fg"><label>Employment Status</label><select><option>No — actively looking</option><option>Yes — open to opportunities</option><option>Freelance / self-employed</option></select></div>
-        <div class="fg"><label>Expected Salary</label><input type="text" placeholder="e.g. PHP 18,000 or negotiable"></div>
+      <div class="frow">
+        <div class="fg"><label>Employment Status</label><select id="f_empstat"><option>No — actively looking</option><option>Yes — open to opportunities</option><option>Freelance / self-employed</option></select></div>
+        <div class="fg"><label>Expected Salary</label><input type="text" id="f_salary" placeholder="e.g. PHP 18,000 or negotiable"></div>
       </div>
-      <div class="fg"><label>When can you start?</label><select><option>Immediately</option><option>Within 2 weeks</option><option>1 month</option><option>More than 1 month</option></select></div>
+      <div class="fg"><label>When can you start?</label><select id="f_start"><option>Immediately</option><option>Within 2 weeks</option><option>1 month</option><option>More than 1 month</option></select></div>
     </div>
 
     <div class="form-step" id="step3">
-      <div class="step-title">Character &amp; Professional References</div>
-      <p style="font-size:0.82rem;color:var(--gray);margin-bottom:1.25rem;line-height:1.65;">Provide at least 2 references who can vouch for your work ethic. Do not include family members.</p>
-      <div class="ref-entry">
-        <div class="ref-lbl">Reference #1</div>
-        <div class="frow"><div class="fg"><label>Full Name</label><input type="text" placeholder="Reference Full Name"></div><div class="fg"><label>Relationship</label><input type="text" placeholder="e.g. Former Supervisor"></div></div>
-        <div class="frow"><div class="fg"><label>Company / Organization</label><input type="text" placeholder="Where they work"></div><div class="fg"><label>Contact Number</label><input type="tel" placeholder="09XX XXX XXXX"></div></div>
-      </div>
-      <div class="ref-entry">
-        <div class="ref-lbl">Reference #2</div>
-        <div class="frow"><div class="fg"><label>Full Name</label><input type="text" placeholder="Reference Full Name"></div><div class="fg"><label>Relationship</label><input type="text" placeholder="e.g. Co-worker, Teacher"></div></div>
-        <div class="frow"><div class="fg"><label>Company / Organization</label><input type="text" placeholder="Where they work"></div><div class="fg"><label>Contact Number</label><input type="tel" placeholder="09XX XXX XXXX"></div></div>
-      </div>
-      <div class="fg" style="margin-top:0.5rem;"><label>Cover Letter <span style="color:var(--gray);font-weight:400;">(optional)</span></label><textarea placeholder="Tell us why you're a great fit for this position..." style="min-height:110px;"></textarea></div>
-    </div>
-
-    <div class="form-step" id="step4">
       <div class="step-title">Send Your Application by Email</div>
-      <p style="font-size:0.82rem;color:var(--gray);margin-bottom:1.1rem;line-height:1.65;">This site does not upload files. Copy your answers below, open your email app, and send everything to YZ Manpower yourself.</p>
+      <p style="font-size:0.82rem;color:var(--gray);margin-bottom:1.1rem;line-height:1.65;">This site does not upload files. Copy your answers below, open your email app, and send everything to YZ Manpower yourself. <strong>Attach only your résumé</strong> (PDF or Word) to the email — list ID and supporting items in the section below so they appear in your copied text.</p>
       <div class="email-guide">
         <h4>How to email YZ Manpower</h4>
         <div class="email-to"><strong>To:</strong> <a id="guideMailLink" href="mailto:yz.manpowerservices@gmail.com">yz.manpowerservices@gmail.com</a></div>
         <p style="font-size:0.8rem;color:var(--light);margin:0 0 0.5rem;line-height:1.6;"><strong>Subject:</strong> <span id="guideSubject">Job Application: (position)</span></p>
         <ol>
-          <li>Tap <strong>Copy application</strong> below and paste into the body of your email.</li>
-          <li>Attach the documents listed — from your own device (Gmail, Outlook, etc.).</li>
+          <li>Fill in <strong>Valid ID</strong> and <strong>Supporting documents</strong> below (checklist and/or typed notes).</li>
+          <li>Tap <strong>Copy application</strong>, paste into your email body, and attach <strong>résumé only</strong> (PDF or Word).</li>
           <li>Review and press <strong>Send</strong>.</li>
         </ol>
-        <p style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);font-weight:700;margin:1rem 0 0.35rem;">Attach to your email</p>
-        <ul class="attach-list">
-          <li>Resume or CV (PDF or Word)</li>
-          <li>Recent 2×2 photo (plain background)</li>
-          <li>Valid government ID (PhilSys, UMID, driver’s license, passport, etc.)</li>
-          <li>Optional: certificates, diplomas, TESDA NC, or other supporting files</li>
+        <p style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);font-weight:700;margin:1rem 0 0.35rem;">Email attachment</p>
+        <ul class="attach-list attach-list-one">
+          <li><strong>Résumé / CV only</strong> — PDF or Word. Do not attach ID photos, certificates, or other files unless we ask you to follow up separately.</li>
         </ul>
+        <p style="font-size:0.78rem;color:var(--gray);margin:0.75rem 0 0;line-height:1.6;">IDs, 2×2 photo, clearances, and other papers: describe them using the checklist and notes below (not as email attachments here).</p>
+      </div>
+      <div class="email-supplement">
+        <p class="email-supplement-lead">Check what applies and/or type details. This block is included when you copy your application.</p>
+        <div class="email-sub-h">Valid ID (check what you have or will submit)</div>
+        <div class="req-checklist email-mini-check">
+          <div class="fg chk-fg"><label class="chk-lbl-wrap" for="e_id_philsys"><input type="checkbox" id="e_id_philsys"><span><strong>PhilSys / National ID</strong><span class="chk-tl">(PhilSys — kung mayroon)</span></span></label></div>
+          <div class="fg chk-fg"><label class="chk-lbl-wrap" for="e_id_umid"><input type="checkbox" id="e_id_umid"><span><strong>UMID / SSS ID</strong><span class="chk-tl">(UMID — kung mayroon)</span></span></label></div>
+          <div class="fg chk-fg"><label class="chk-lbl-wrap" for="e_id_dl"><input type="checkbox" id="e_id_dl"><span><strong>Driver’s license</strong><span class="chk-tl">(Driver’s license — kung mayroon)</span></span></label></div>
+          <div class="fg chk-fg"><label class="chk-lbl-wrap" for="e_id_passport"><input type="checkbox" id="e_id_passport"><span><strong>Passport</strong><span class="chk-tl">(Passport — kung mayroon)</span></span></label></div>
+          <div class="fg chk-fg"><label class="chk-lbl-wrap" for="e_id_postal"><input type="checkbox" id="e_id_postal"><span><strong>Postal ID / Voter’s / other valid ID</strong><span class="chk-tl">(Iba pang valid ID — i-type sa notes kung kailangan)</span></span></label></div>
+        </div>
+        <div class="fg"><label>ID details (type what it is — optional)</label><textarea id="e_id_notes" placeholder="e.g. PhilSys card, UMID number, expiry date, or other ID description..."></textarea></div>
+        <div class="email-sub-h">Supporting documents (check what you have or will submit)</div>
+        <div class="req-checklist email-mini-check">
+          <div class="fg chk-fg"><label class="chk-lbl-wrap" for="e_sup_photo"><input type="checkbox" id="e_sup_photo"><span><strong>Recent 2×2 photo</strong><span class="chk-tl">(Larawan — kung mayroon)</span></span></label></div>
+          <div class="fg chk-fg"><label class="chk-lbl-wrap" for="e_sup_cert"><input type="checkbox" id="e_sup_cert"><span><strong>Certificates / trainings</strong><span class="chk-tl">(Sertipiko — kung mayroon)</span></span></label></div>
+          <div class="fg chk-fg"><label class="chk-lbl-wrap" for="e_sup_diploma"><input type="checkbox" id="e_sup_diploma"><span><strong>Diploma / TOR</strong><span class="chk-tl">(Diploma o TOR — kung mayroon)</span></span></label></div>
+          <div class="fg chk-fg"><label class="chk-lbl-wrap" for="e_sup_tesda"><input type="checkbox" id="e_sup_tesda"><span><strong>TESDA NC / assessment</strong><span class="chk-tl">(TESDA — kung mayroon)</span></span></label></div>
+          <div class="fg chk-fg"><label class="chk-lbl-wrap" for="e_sup_clearance"><input type="checkbox" id="e_sup_clearance"><span><strong>NBI / Police clearance (copy)</strong><span class="chk-tl">(Clearance — kung mayroon)</span></span></label></div>
+        </div>
+        <div class="fg"><label>Supporting details (type what they are — optional)</label><textarea id="e_sup_notes" placeholder="Describe other certificates, diplomas, clearances, or supporting files you will present..."></textarea></div>
       </div>
       <label class="summary-label" for="appSummaryText">Your application (copy this into the email body)</label>
       <textarea id="appSummaryText" class="app-summary-text" readonly rows="12" aria-readonly="true"></textarea>
@@ -333,14 +353,14 @@
     <div class="form-success" id="formSuccess">
       <div class="suc-icon">&#10003;</div>
       <div class="suc-title">Almost Done</div>
-      <p class="suc-desc">If you haven’t yet, open your email app and send your message to <strong>yz.manpowerservices@gmail.com</strong> for <strong id="sucJob"></strong>. Use the subject line and attachments described in step 4, and paste the application text you copied.</p>
+      <p class="suc-desc">If you haven’t yet, open your email app and send your message to <strong>yz.manpowerservices@gmail.com</strong> for <strong id="sucJob"></strong>. Use the subject line and attachments described in step 3, and paste the application text you copied.</p>
       <p style="font-size:0.8rem;color:var(--gray);margin-bottom:1.75rem;">Our team will reply using the contact details you included in your application.</p>
       <button type="button" class="btn-primary" onclick="closeModal()">Close</button>
     </div>
 
     <div class="form-nav" id="formNav">
       <button type="button" class="form-back" id="backBtn" onclick="prevStep()" style="visibility:hidden">&#8592; Back</button>
-      <div class="form-counter" id="stepCounter">Step 1 of 4</div>
+      <div class="form-counter" id="stepCounter">Step 1 of 3</div>
       <button type="button" class="form-next" id="nextBtn" onclick="nextStep()">Next &#8594;</button>
     </div>
   </div>
@@ -360,7 +380,7 @@ function filterJobs(cat, btn) {
 }
 
 let curStep = 1;
-const TOTAL = 4;
+const TOTAL = 3;
 
 function openModal(title, cat) {
   document.getElementById('modalTitle').textContent = title;
@@ -396,7 +416,7 @@ function showStep(n) {
   document.getElementById('backBtn').style.visibility = n === 1 ? 'hidden' : 'visible';
   document.getElementById('nextBtn').textContent = n === TOTAL ? 'Finish' : 'Next →';
   document.getElementById('appModal').scrollTop = 0;
-  if (n === 4) refreshStep4Summary();
+  if (n === 3) refreshStep4Summary();
 }
 
 function refreshStep4Summary() {
@@ -426,6 +446,10 @@ function collectApplicationBody() {
   ['step1', 'step2', 'step3'].forEach(function (stepId) {
     var step = document.getElementById(stepId);
     if (!step) return;
+    if (stepId === 'step3') {
+      lines.push('');
+      lines.push('--- Valid ID & supporting documents (describe for email; résumé attached separately) ---');
+    }
     step.querySelectorAll('.fg').forEach(function (fg) {
       var labelEl = fg.querySelector('label');
       if (!labelEl) return;
@@ -433,12 +457,18 @@ function collectApplicationBody() {
       fg.querySelectorAll('input, textarea, select').forEach(function (el) {
         if (el.type === 'hidden' || el.readOnly) return;
         if (el.type === 'button' || el.type === 'submit' || el.type === 'file') return;
-        lines.push(label + ': ' + (String(el.value || '').trim() || '(empty)'));
+        var val;
+        if (el.type === 'checkbox') {
+          val = el.checked ? 'Yes (have / available)' : 'No / not yet';
+        } else {
+          val = String(el.value || '').trim() || '(empty)';
+        }
+        lines.push(label + ': ' + val);
       });
     });
   });
   lines.push('');
-  lines.push('--- End of questionnaire. Attach resume, 2x2 photo, valid ID, and optional certificates in your email. ---');
+  lines.push('--- End of questionnaire. Email: attach résumé (PDF/Word) only. ID and supporting items are listed above; bring or send copies when instructed. ---');
   return lines.join('\n');
 }
 
@@ -473,17 +503,6 @@ function submitApp() {
   document.getElementById('stepBar').style.display = 'none';
   document.getElementById('formSuccess').classList.add('show');
 }
-
-let expCount = 1;
-function addExp() {
-  expCount++;
-  const d = document.createElement('div');
-  d.className = 'exp-entry';
-  d.id = 'expE' + expCount;
-  d.innerHTML = `<div class="exp-head"><div class="exp-lbl">Experience #${expCount}</div><button type="button" class="exp-rm" onclick="removeExp('expE${expCount}')">&#10005;</button></div><div class="frow"><div class="fg"><label>Company Name</label><input type="text" placeholder="Company Name"></div><div class="fg"><label>Position / Job Title</label><input type="text" placeholder="Your Role"></div></div><div class="frow"><div class="fg"><label>Date Started</label><input type="month"></div><div class="fg"><label>Date Ended</label><input type="month"></div></div><div class="fg"><label>Duties &amp; Responsibilities</label><textarea placeholder="Brief description..."></textarea></div>`;
-  document.getElementById('expContainer').appendChild(d);
-}
-function removeExp(id) { const e = document.getElementById(id); if (e) e.remove(); }
 
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });

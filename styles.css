@@ -164,6 +164,13 @@ h2 { font-family: 'Bebas Neue',sans-serif; font-size: clamp(2.4rem,3.8vw,3.6rem)
 .form-step { padding: 1.75rem 2rem; display: none; }
 .form-step.active { display: block; }
 .step-title { font-family: 'Barlow Condensed',sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.step-sub { font-size: 0.82rem; color: var(--gray); margin: -0.65rem 0 1.15rem; line-height: 1.5; font-style: italic; }
+.req-checklist { background: var(--navy); border: 1px solid rgba(255,255,255,0.07); border-left: 3px solid rgba(192,21,15,0.35); padding: 1rem 1.15rem; margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.85rem; }
+.chk-fg { margin-bottom: 0; }
+.chk-fg .chk-lbl-wrap { display: flex; align-items: flex-start; gap: 0.65rem; cursor: pointer; font-size: 0.88rem; color: var(--light); line-height: 1.45; text-transform: none; letter-spacing: normal; font-weight: 400; margin-bottom: 0; }
+.chk-fg .chk-lbl-wrap input[type="checkbox"] { width: auto; min-width: 1rem; margin-top: 0.2rem; flex-shrink: 0; accent-color: var(--red); cursor: pointer; }
+.chk-fg .chk-lbl-wrap strong { font-weight: 600; display: block; }
+.chk-fg .chk-tl { display: block; font-size: 0.78rem; color: var(--gray); font-weight: 400; margin-top: 0.2rem; line-height: 1.4; }
 .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .fg { margin-bottom: 1.1rem; }
 .fg label { display: block; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.45rem; font-weight: 600; }
@@ -176,7 +183,7 @@ h2 { font-family: 'Bebas Neue',sans-serif; font-size: clamp(2.4rem,3.8vw,3.6rem)
 .fg input[type="file"]::-webkit-file-upload-button { background: var(--red); color: #fff; border: none; padding: 0.35rem 0.9rem; font-family: 'Barlow',sans-serif; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; cursor: pointer; margin-right: 0.85rem; }
 .file-hint { font-size: 0.7rem; color: var(--gray); margin-top: 0.35rem; }
 
-/* STEP 4 â€” EMAIL GUIDE */
+/* EMAIL STEP (final) */
 .email-guide { background: var(--navy); border: 1px solid rgba(255,255,255,0.08); border-left: 3px solid var(--red); padding: 1.1rem 1.25rem; margin-bottom: 1.25rem; }
 .email-guide h4 { font-family: 'Barlow Condensed',sans-serif; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); font-weight: 700; margin-bottom: 0.65rem; }
 .email-guide ol { margin: 0; padding-left: 1.2rem; font-size: 0.82rem; color: var(--light); line-height: 1.75; }
@@ -185,6 +192,12 @@ h2 { font-family: 'Bebas Neue',sans-serif; font-size: clamp(2.4rem,3.8vw,3.6rem)
 .email-guide .email-to a { color: var(--red); text-decoration: none; }
 .email-guide .email-to a:hover { text-decoration: underline; }
 .email-guide .attach-list { margin: 0.75rem 0 0; padding-left: 1.1rem; font-size: 0.8rem; color: var(--gray); line-height: 1.65; }
+.email-guide .attach-list-one li { margin-bottom: 0; }
+.email-supplement { margin-bottom: 1.25rem; }
+.email-supplement-lead { font-size: 0.8rem; color: var(--light); line-height: 1.65; margin-bottom: 0.85rem; }
+.email-sub-h { font-family: 'Barlow Condensed',sans-serif; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); font-weight: 700; margin: 1rem 0 0.65rem; }
+.email-supplement-lead + .email-sub-h { margin-top: 0; }
+.email-mini-check { margin-bottom: 0.35rem; }
 .summary-label { display: block; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.45rem; font-weight: 600; }
 .app-summary-text { width: 100%; min-height: 200px; max-height: 280px; background: var(--navy); border: 1px solid rgba(255,255,255,0.12); color: var(--light); padding: 0.85rem 1rem; font-family: ui-monospace, 'Cascadia Code', 'Consolas', monospace; font-size: 0.72rem; line-height: 1.5; resize: vertical; outline: none; }
 .copy-summary-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 0.65rem; margin-bottom: 1rem; }
