@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Openings — YZ Manpower Services</title>
+<link rel="icon" href="Untitled%20design.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="Untitled%20design.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Main">
+  <a class="nav-logo" href="index.html#home">
+    <div class="nav-logo-mark">YZ</div>
+    <div class="nav-brand"><span>YZ</span> Manpower</div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#home">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#why">Why YZ</a></li>
+    <li class="nav-jobs-link"><a href="jobs.html" class="active">Job Openings</a></li>
+    <li><a href="requirements.html">Requirements</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-ham" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<section class="jobs page-subpage" id="jobs">
+  <div class="section-label"><span>Now Hiring</span></div>
+  <h2>Open Positions</h2>
+  <p class="jobs-flyer-note">Roles combine our <strong>YZ Consultancy Services Inc.</strong> client flyer (volume hiring) and <strong>YZ Manpower Services</strong> advance pooling. Apply via this site (questionnaire + email) or send your résumé to <a href="mailto:yz.manpower.agency@gmail.com" style="color:var(--red);">yz.manpower.agency@gmail.com</a> / <a href="mailto:yz.manpowerservices@gmail.com" style="color:var(--red);">yz.manpowerservices@gmail.com</a>. <a href="requirements.html" style="color:var(--white);text-decoration:underline;">Full document checklist →</a></p>
+  <div class="jobs-header" style="margin-bottom:1.5rem;">
+    <div class="jobs-filters">
+      <button type="button" class="filter-btn active" onclick="filterJobs('all',this)">All</button>
+      <button type="button" class="filter-btn" onclick="filterJobs('production',this)">Production &amp; Warehouse</button>
+      <button type="button" class="filter-btn" onclick="filterJobs('engineering',this)">Engineering &amp; Technical</button>
+      <button type="button" class="filter-btn" onclick="filterJobs('admin',this)">HR / Admin &amp; Office</button>
+      <button type="button" class="filter-btn" onclick="filterJobs('finance',this)">Finance &amp; Accounting</button>
+    </div>
+  </div>
+  <ul class="jobs-flyer-note" style="list-style:disc;">
+    <li><strong>Flyer 1</strong> — Client hiring (SBMA partner branding, per-role slot counts).</li>
+    <li><strong>Flyer 2</strong> — YZ Manpower Services branding, full role list &amp; document checklist.</li>
+  </ul>
+  <div class="jobs-flyers-row fade-up">
+    <div>
+      <div class="jobs-flyer-wrap">
+        <img src="hiring-flyer.jpg" alt="YZ Consultancy Services Inc. hiring flyer with job vacancies" width="800" height="1131" loading="lazy">
+      </div>
+      <p class="jobs-flyer-caption">Consultancy client flyer</p>
+    </div>
+    <div>
+      <div class="jobs-flyer-wrap">
+        <img src="yzmanpowerflyer2.jpg" alt="YZ Manpower Services — advance pooling, role list and requirements" width="800" height="1131" loading="lazy">
+      </div>
+      <p class="jobs-flyer-caption">YZ Manpower Services flyer</p>
+    </div>
+  </div>
+  <div class="jobs-grid" id="jobsGrid">
+    <div class="job-card fade-up" data-category="production">
+      <div class="job-card-top"><h3>Production Operator</h3><span class="job-badge">Production &amp; Warehouse</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Client flyer</div></div>
+      <p class="job-desc">High-volume line work: follow safety and quality rules, operate assigned machines or stations, hit output targets, and report issues to line leaders. Listed on both flyers for mass hiring.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>1,000 open</strong></div><button type="button" class="job-apply" onclick="openModal('Production Operator','Production &amp; Warehouse')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="production">
+      <div class="job-card-top"><h3>Sewer</h3><span class="job-badge">Production &amp; Warehouse</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Garment / textile</div></div>
+      <p class="job-desc">Industrial sewing and assembly for production lines; neat workmanship, ability to follow patterns and quality specs. Experience on industrial machines is a plus.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>50 open</strong></div><button type="button" class="job-apply" onclick="openModal('Sewer','Production &amp; Warehouse')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="production">
+      <div class="job-card-top"><h3>Warehouse Staff</h3><span class="job-badge">Production &amp; Warehouse</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Logistics</div></div>
+      <p class="job-desc">Receiving, put-away, picking, packing, cycle counts, and stock accuracy; safe use of MHE where trained; keeps the warehouse orderly and aligned with shipping schedules.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>20 open</strong></div><button type="button" class="job-apply" onclick="openModal('Warehouse Staff','Production &amp; Warehouse')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="production">
+      <div class="job-card-top"><h3>Line Leaders / Production Section Leader</h3><span class="job-badge">Production &amp; Warehouse</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Leadership</div></div>
+      <p class="job-desc">Lead a line or section: brief the team, monitor KPIs, enforce 5S and safety, solve first-level problems, coordinate with planners and QA, and escalate downtime or quality issues.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>100 open</strong></div><button type="button" class="job-apply" onclick="openModal('Line Leaders / Production Section Leader','Production &amp; Warehouse')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="production">
+      <div class="job-card-top"><h3>Production Planner</h3><span class="job-badge">Production &amp; Warehouse</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Advance pooling</div></div>
+      <p class="job-desc">Build and maintain production schedules, align capacity with orders, coordinate materials with warehouse and buyers, and track plan vs actual with manufacturing and logistics.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>Advance pooling</strong></div><button type="button" class="job-apply" onclick="openModal('Production Planner','Production &amp; Warehouse')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="production">
+      <div class="job-card-top"><h3>Production Manager</h3><span class="job-badge">Production &amp; Warehouse</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Senior role</div></div>
+      <p class="job-desc">Owns shift or plant output: sets targets, manages line leaders, drives safety and quality, partners with engineering and HR on manpower, and reports on performance and improvement projects.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>Advance pooling</strong></div><button type="button" class="job-apply" onclick="openModal('Production Manager','Production &amp; Warehouse')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="production">
+      <div class="job-card-top"><h3>Driver</h3><span class="job-badge">Production &amp; Warehouse</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Valid license</div></div>
+      <p class="job-desc">Company or service vehicle operation for personnel, goods, or documents as assigned; valid professional driver’s license, clean driving record, and compliance with traffic and company safety rules.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>Advance pooling</strong></div><button type="button" class="job-apply" onclick="openModal('Driver','Production &amp; Warehouse')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="engineering">
+      <div class="job-card-top"><h3>Production Engineers / Production Technicians</h3><span class="job-badge">Engineering &amp; Technical</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Client flyer</div></div>
+      <p class="job-desc">Line support, process troubleshooting, tooling and parameter checks, trial runs, CAPA support, and technical documentation; works with production and quality to stabilize and improve yield.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>100 open</strong></div><button type="button" class="job-apply" onclick="openModal('Production Engineers / Production Technicians','Engineering &amp; Technical')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="engineering">
+      <div class="job-card-top"><h3>Customer Quality Engineer</h3><span class="job-badge">Engineering &amp; Technical</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>QA / customer</div></div>
+      <p class="job-desc">Bridge between plant quality and customer requirements: handle concerns, CARs, and audits, analyze defects, drive containment and corrective actions, and support PPAP or customer-specific standards.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>Advance pooling</strong></div><button type="button" class="job-apply" onclick="openModal('Customer Quality Engineer','Engineering &amp; Technical')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="engineering">
+      <div class="job-card-top"><h3>Inspectors</h3><span class="job-badge">Engineering &amp; Technical</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>QC / QA</div></div>
+      <p class="job-desc">In-process and final inspection against control plans and sampling; accurate records, tagging of non-conforming product, and communication to line leaders and QA engineers.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>20 open</strong></div><button type="button" class="job-apply" onclick="openModal('Inspectors','Engineering &amp; Technical')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="engineering">
+      <div class="job-card-top"><h3>Forklift Operator</h3><span class="job-badge">Engineering &amp; Technical</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Certified</div></div>
+      <p class="job-desc">Safe forklift operation for loading, unloading, and staging; follows site traffic rules and load limits; valid certification or training as required by the facility.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>10 open</strong></div><button type="button" class="job-apply" onclick="openModal('Forklift Operator','Engineering &amp; Technical')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="engineering">
+      <div class="job-card-top"><h3>Electrician</h3><span class="job-badge">Engineering &amp; Technical</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Licensed preferred</div></div>
+      <p class="job-desc">Install, test, and repair plant electrical systems and equipment; support breakdowns, preventive maintenance, and lockout/tagout; PEET or equivalent credentials preferred where required.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>10 open</strong></div><button type="button" class="job-apply" onclick="openModal('Electrician','Engineering &amp; Technical')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="engineering">
+      <div class="job-card-top"><h3>Maintenance</h3><span class="job-badge">Engineering &amp; Technical</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Mechanical / electrical</div></div>
+      <p class="job-desc">Preventive and corrective maintenance on production assets; basic fabrication, lubrication, alignment checks, and coordination with production for downtime windows.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>Advance pooling</strong></div><button type="button" class="job-apply" onclick="openModal('Maintenance','Engineering &amp; Technical')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="engineering">
+      <div class="job-card-top"><h3>Safety Officer</h3><span class="job-badge">Engineering &amp; Technical</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>OHS compliance</div></div>
+      <p class="job-desc">Implements OHS programs, incident investigation, toolbox talks, inspections, and DOLE reporting support; promotes a culture of safety on the shop floor and in offices.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>Advance pooling</strong></div><button type="button" class="job-apply" onclick="openModal('Safety Officer','Engineering &amp; Technical')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="engineering">
+      <div class="job-card-top"><h3>Pollution Control Officer (PCO)</h3><span class="job-badge">Engineering &amp; Technical</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Environmental</div></div>
+      <p class="job-desc">Serves as Pollution Control Officer per DENR requirements: monitors compliance with ECC and permits, waste and wastewater records, self-monitoring reports, coordination with regulators, and internal environmental policies. PCO accreditation or willingness to obtain required training is an advantage.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>10 open</strong></div><button type="button" class="job-apply" onclick="openModal('Pollution Control Officer (PCO)','Engineering &amp; Technical')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="admin">
+      <div class="job-card-top"><h3>HR Assistant / HR &amp; Admin</h3><span class="job-badge">HR / Admin &amp; Office</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Office</div></div>
+      <p class="job-desc">Supports recruitment, 201 files, attendance and HRIS encoding, onboarding paperwork, and general admin; strong organization and confidentiality; aligns with “HR Assistant” on the YZ Manpower flyer.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>20 open</strong></div><button type="button" class="job-apply" onclick="openModal('HR Assistant / HR &amp; Admin','HR / Admin &amp; Office')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="admin">
+      <div class="job-card-top"><h3>Office &amp; Admin</h3><span class="job-badge">HR / Admin &amp; Office</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>General admin</div></div>
+      <p class="job-desc">Front-office and back-office tasks: filing, data entry, scheduling, reception, and coordination across departments as listed on the YZ Manpower pooling flyer.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>Advance pooling</strong></div><button type="button" class="job-apply" onclick="openModal('Office &amp; Admin','HR / Admin &amp; Office')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="admin">
+      <div class="job-card-top"><h3>IT Assistant</h3><span class="job-badge">HR / Admin &amp; Office</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Helpdesk</div></div>
+      <p class="job-desc">User support, PC and peripheral setup, basic network and account troubleshooting, asset tagging, and coordination with vendors or HQ IT.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>Advance pooling</strong></div><button type="button" class="job-apply" onclick="openModal('IT Assistant','HR / Admin &amp; Office')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="admin">
+      <div class="job-card-top"><h3>Import &amp; Export Officer</h3><span class="job-badge">HR / Admin &amp; Office</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Customs / docs</div></div>
+      <p class="job-desc">Prepares and tracks shipping documents, coordinates with forwarders and brokers, monitors customs clearance, and ensures accurate filing for import/export transactions.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>Advance pooling</strong></div><button type="button" class="job-apply" onclick="openModal('Import &amp; Export Officer','HR / Admin &amp; Office')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="admin">
+      <div class="job-card-top"><h3>Liaison Officer</h3><span class="job-badge">HR / Admin &amp; Office</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Government / LGU</div></div>
+      <p class="job-desc">Represents the company in transactions with government offices, agencies, and PEZA/SBFZ requirements; processes permits, licenses, and follow-ups with professionalism.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>Advance pooling</strong></div><button type="button" class="job-apply" onclick="openModal('Liaison Officer','HR / Admin &amp; Office')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="finance">
+      <div class="job-card-top"><h3>Accounting Staff</h3><span class="job-badge">Finance &amp; Accounting</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>GL / AP / AR</div></div>
+      <p class="job-desc">Vouchers, journal entries, reconciliations, billing or payables support, and month-end assistance under supervision; proficiency in Excel and accounting systems preferred.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>Advance pooling</strong></div><button type="button" class="job-apply" onclick="openModal('Accounting Staff','Finance &amp; Accounting')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="finance">
+      <div class="job-card-top"><h3>Accounting Manager</h3><span class="job-badge">Finance &amp; Accounting</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Leadership</div></div>
+      <p class="job-desc">Oversees the accounting team, financial reporting timeliness, internal controls, audit coordination, and compliance with BIR and company policies.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>Advance pooling</strong></div><button type="button" class="job-apply" onclick="openModal('Accounting Manager','Finance &amp; Accounting')">Apply Now</button></div>
+    </div>
+    <div class="job-card fade-up" data-category="finance">
+      <div class="job-card-top"><h3>Cost Accountant</h3><span class="job-badge">Finance &amp; Accounting</span></div>
+      <div class="job-meta"><div class="job-meta-item"><div class="job-dot"></div>Full-time</div><div class="job-meta-item"><div class="job-dot"></div>Subic Bay FZ</div><div class="job-meta-item"><div class="job-dot"></div>Manufacturing cost</div></div>
+      <p class="job-desc">Product costing, BOM analysis, variance review, inventory valuation support, and manufacturing finance reports to help control material and conversion costs.</p>
+      <div class="job-footer"><div class="job-slots">Slots: <strong>Advance pooling</strong></div><button type="button" class="job-apply" onclick="openModal('Cost Accountant','Finance &amp; Accounting')">Apply Now</button></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="footer-brand"><span>YZ</span> Manpower Services</div>
+    <div class="footer-tag">Service First &bull; Customer First</div>
+  </div>
+  <div class="footer-copy">&copy; 2026 YZ Manpower Services. All rights reserved.<br>Subic Bay Freeport Zone, Olongapo, Philippines<br>
+    <a href="mailto:yz.manpower.agency@gmail.com">yz.manpower.agency@gmail.com</a>
+    &middot; <a href="mailto:yz.manpowerservices@gmail.com">yz.manpowerservices@gmail.com</a>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay" onclick="overlayClick(event)">
+  <div class="modal" id="appModal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modalTitle">Job Title</div>
+        <div class="modal-subtitle" id="modalCat">Category | YZ Manpower Services</div>
+      </div>
+      <button type="button" class="modal-close" onclick="closeModal()">&#10005;</button>
+    </div>
+
+    <div class="step-bar" id="stepBar">
+      <div class="step-dot active" id="dot1"><div class="step-num">1</div><div class="step-lbl">Personal</div></div>
+      <div class="step-dot" id="dot2"><div class="step-num">2</div><div class="step-lbl">Experience</div></div>
+      <div class="step-dot" id="dot3"><div class="step-num">3</div><div class="step-lbl">References</div></div>
+      <div class="step-dot" id="dot4"><div class="step-num">4</div><div class="step-lbl">Email</div></div>
+    </div>
+
+    <div class="form-step active" id="step1">
+      <div class="step-title">Personal Information</div>
+      <div class="frow">
+        <div class="fg"><label>First Name <span class="req">*</span></label><input type="text" id="f_fn" placeholder="Juan"></div>
+        <div class="fg"><label>Last Name <span class="req">*</span></label><input type="text" id="f_ln" placeholder="Dela Cruz"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label>Middle Name</label><input type="text" placeholder="Optional"></div>
+        <div class="fg"><label>Date of Birth <span class="req">*</span></label><input type="date"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label>Email <span class="req">*</span></label><input type="email" placeholder="your@email.com"></div>
+        <div class="fg"><label>Mobile Number <span class="req">*</span></label><input type="tel" placeholder="09XX XXX XXXX"></div>
+      </div>
+      <div class="fg"><label>Current Address <span class="req">*</span></label><input type="text" placeholder="Street, Barangay, City, Province"></div>
+      <div class="frow">
+        <div class="fg"><label>Civil Status</label><select><option>Single</option><option>Married</option><option>Widowed</option><option>Separated</option></select></div>
+        <div class="fg"><label>Highest Education</label><select><option>High School Graduate</option><option>Vocational / TESDA</option><option>Some College</option><option>College Graduate</option><option>Post-Graduate</option></select></div>
+      </div>
+      <div class="fg"><label>Position Applying For</label><input type="text" id="f_pos" readonly style="opacity:0.6;cursor:default"></div>
+    </div>
+
+    <div class="form-step" id="step2">
+      <div class="step-title">Work Experience</div>
+      <div id="expContainer">
+        <div class="exp-entry">
+          <div class="exp-head"><div class="exp-lbl">Experience #1</div></div>
+          <div class="frow">
+            <div class="fg"><label>Company Name</label><input type="text" placeholder="Company Name"></div>
+            <div class="fg"><label>Position / Job Title</label><input type="text" placeholder="Your Role"></div>
+          </div>
+          <div class="frow">
+            <div class="fg"><label>Date Started</label><input type="month"></div>
+            <div class="fg"><label>Date Ended</label><input type="month"></div>
+          </div>
+          <div class="fg"><label>Duties &amp; Responsibilities</label><textarea placeholder="Brief description of your role and achievements..."></textarea></div>
+        </div>
+      </div>
+      <button type="button" class="add-exp" onclick="addExp()">+ Add Another Experience</button>
+      <div class="frow" style="margin-top:1.25rem;">
+        <div class="fg"><label>Employment Status</label><select><option>No — actively looking</option><option>Yes — open to opportunities</option><option>Freelance / self-employed</option></select></div>
+        <div class="fg"><label>Expected Salary</label><input type="text" placeholder="e.g. PHP 18,000 or negotiable"></div>
+      </div>
+      <div class="fg"><label>When can you start?</label><select><option>Immediately</option><option>Within 2 weeks</option><option>1 month</option><option>More than 1 month</option></select></div>
+    </div>
+
+    <div class="form-step" id="step3">
+      <div class="step-title">Character &amp; Professional References</div>
+      <p style="font-size:0.82rem;color:var(--gray);margin-bottom:1.25rem;line-height:1.65;">Provide at least 2 references who can vouch for your work ethic. Do not include family members.</p>
+      <div class="ref-entry">
+        <div class="ref-lbl">Reference #1</div>
+        <div class="frow"><div class="fg"><label>Full Name</label><input type="text" placeholder="Reference Full Name"></div><div class="fg"><label>Relationship</label><input type="text" placeholder="e.g. Former Supervisor"></div></div>
+        <div class="frow"><div class="fg"><label>Company / Organization</label><input type="text" placeholder="Where they work"></div><div class="fg"><label>Contact Number</label><input type="tel" placeholder="09XX XXX XXXX"></div></div>
+      </div>
+      <div class="ref-entry">
+        <div class="ref-lbl">Reference #2</div>
+        <div class="frow"><div class="fg"><label>Full Name</label><input type="text" placeholder="Reference Full Name"></div><div class="fg"><label>Relationship</label><input type="text" placeholder="e.g. Co-worker, Teacher"></div></div>
+        <div class="frow"><div class="fg"><label>Company / Organization</label><input type="text" placeholder="Where they work"></div><div class="fg"><label>Contact Number</label><input type="tel" placeholder="09XX XXX XXXX"></div></div>
+      </div>
+      <div class="fg" style="margin-top:0.5rem;"><label>Cover Letter <span style="color:var(--gray);font-weight:400;">(optional)</span></label><textarea placeholder="Tell us why you're a great fit for this position..." style="min-height:110px;"></textarea></div>
+    </div>
+
+    <div class="form-step" id="step4">
+      <div class="step-title">Send Your Application by Email</div>
+      <p style="font-size:0.82rem;color:var(--gray);margin-bottom:1.1rem;line-height:1.65;">This site does not upload files. Copy your answers below, open your email app, and send everything to YZ Manpower yourself.</p>
+      <div class="email-guide">
+        <h4>How to email YZ Manpower</h4>
+        <div class="email-to"><strong>To:</strong> <a id="guideMailLink" href="mailto:yz.manpower.agency@gmail.com">yz.manpower.agency@gmail.com</a></div>
+        <p style="font-size:0.8rem;color:var(--light);margin:0 0 0.5rem;line-height:1.6;"><strong>Subject:</strong> <span id="guideSubject">Job Application: (position)</span></p>
+        <ol>
+          <li>Tap <strong>Copy application</strong> below and paste into the body of your email.</li>
+          <li>Attach the documents listed — from your own device (Gmail, Outlook, etc.).</li>
+          <li>Review and press <strong>Send</strong>.</li>
+        </ol>
+        <p style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);font-weight:700;margin:1rem 0 0.35rem;">Attach to your email</p>
+        <ul class="attach-list">
+          <li>Resume or CV (PDF or Word)</li>
+          <li>Recent 2×2 photo (plain background)</li>
+          <li>Valid government ID (PhilSys, UMID, driver’s license, passport, etc.)</li>
+          <li>Optional: certificates, diplomas, TESDA NC, or other supporting files</li>
+        </ul>
+      </div>
+      <label class="summary-label" for="appSummaryText">Your application (copy this into the email body)</label>
+      <textarea id="appSummaryText" class="app-summary-text" readonly rows="12" aria-readonly="true"></textarea>
+      <div class="copy-summary-row">
+        <button type="button" class="btn-copy-summary" onclick="copyApplicationSummary()">Copy application</button>
+        <span class="copy-feedback" id="copyFeedback" role="status"></span>
+      </div>
+      <div style="background:var(--navy);border:1px solid rgba(255,255,255,0.07);border-left:3px solid rgba(192,21,15,0.5);padding:1rem;">
+        <div style="font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:0.4rem;">Data privacy</div>
+        <p style="font-size:0.78rem;color:var(--gray);line-height:1.65;">Information you typed is shown only on your device until you send your email. We do not collect uploads through this form. By emailing us, you consent to processing for recruitment under the Data Privacy Act (RA 10173).</p>
+      </div>
+    </div>
+
+    <div class="form-success" id="formSuccess">
+      <div class="suc-icon">&#10003;</div>
+      <div class="suc-title">Almost Done</div>
+      <p class="suc-desc">If you haven’t yet, open your email app and send your message to <strong>yz.manpower.agency@gmail.com</strong> for <strong id="sucJob"></strong>. Use the subject line and attachments described in step 4, and paste the application text you copied.</p>
+      <p style="font-size:0.8rem;color:var(--gray);margin-bottom:1.75rem;">Our team will reply using the contact details you included in your application.</p>
+      <button type="button" class="btn-primary" onclick="closeModal()">Close</button>
+    </div>
+
+    <div class="form-nav" id="formNav">
+      <button type="button" class="form-back" id="backBtn" onclick="prevStep()" style="visibility:hidden">&#8592; Back</button>
+      <div class="form-counter" id="stepCounter">Step 1 of 4</div>
+      <button type="button" class="form-next" id="nextBtn" onclick="nextStep()">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const APPLY_EMAIL = 'yz.manpower.agency@gmail.com';
+
+function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
+
+function filterJobs(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.job-card').forEach(c => {
+    c.classList.toggle('hidden', cat !== 'all' && c.dataset.category !== cat);
+  });
+}
+
+let curStep = 1;
+const TOTAL = 4;
+
+function openModal(title, cat) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalCat').textContent = cat + '  |  YZ Manpower Services';
+  document.getElementById('f_pos').value = title;
+  curStep = 1;
+  var cf = document.getElementById('copyFeedback');
+  if (cf) cf.textContent = '';
+  showStep(1);
+  document.getElementById('formSuccess').classList.remove('show');
+  document.getElementById('formNav').style.display = 'flex';
+  document.getElementById('stepBar').style.display = 'flex';
+  for (let i = 1; i <= TOTAL; i++) { const s = document.getElementById('step' + i); if (s) s.classList.remove('active'); }
+  document.getElementById('step1').classList.add('active');
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function overlayClick(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+
+function showStep(n) {
+  for (let i = 1; i <= TOTAL; i++) {
+    const s = document.getElementById('step' + i), d = document.getElementById('dot' + i);
+    if (s) s.classList.toggle('active', i === n);
+    if (d) { d.classList.toggle('active', i === n); d.classList.toggle('done', i < n); }
+  }
+  document.getElementById('stepCounter').textContent = 'Step ' + n + ' of ' + TOTAL;
+  document.getElementById('backBtn').style.visibility = n === 1 ? 'hidden' : 'visible';
+  document.getElementById('nextBtn').textContent = n === TOTAL ? 'Finish' : 'Next →';
+  document.getElementById('appModal').scrollTop = 0;
+  if (n === 4) refreshStep4Summary();
+}
+
+function refreshStep4Summary() {
+  var pos = (document.getElementById('f_pos') && document.getElementById('f_pos').value) || document.getElementById('modalTitle').textContent;
+  var subjEl = document.getElementById('guideSubject');
+  if (subjEl) subjEl.textContent = 'Job Application: ' + pos;
+  var ta = document.getElementById('appSummaryText');
+  if (ta) ta.value = collectApplicationBody();
+  var fb = document.getElementById('copyFeedback');
+  if (fb) fb.textContent = '';
+}
+
+function nextStep() {
+  if (curStep < TOTAL) { curStep++; showStep(curStep); }
+  else submitApp();
+}
+function prevStep() { if (curStep > 1) { curStep--; showStep(curStep); } }
+
+function collectApplicationBody() {
+  const lines = [];
+  const pos = (document.getElementById('f_pos') && document.getElementById('f_pos').value) || document.getElementById('modalTitle').textContent;
+  lines.push('=== JOB APPLICATION — YZ MANPOWER SERVICES ===');
+  lines.push('Position applying for: ' + pos);
+  lines.push('Send to: ' + APPLY_EMAIL);
+  lines.push('Date: ' + new Date().toLocaleString());
+  lines.push('');
+  ['step1', 'step2', 'step3'].forEach(function (stepId) {
+    var step = document.getElementById(stepId);
+    if (!step) return;
+    step.querySelectorAll('.fg').forEach(function (fg) {
+      var labelEl = fg.querySelector('label');
+      if (!labelEl) return;
+      var label = labelEl.textContent.replace(/\s+/g, ' ').replace(/\*\s*/g, '').trim();
+      fg.querySelectorAll('input, textarea, select').forEach(function (el) {
+        if (el.type === 'hidden' || el.readOnly) return;
+        if (el.type === 'button' || el.type === 'submit' || el.type === 'file') return;
+        lines.push(label + ': ' + (String(el.value || '').trim() || '(empty)'));
+      });
+    });
+  });
+  lines.push('');
+  lines.push('--- End of questionnaire. Attach resume, 2x2 photo, valid ID, and optional certificates in your email. ---');
+  return lines.join('\n');
+}
+
+function copyApplicationSummary() {
+  var ta = document.getElementById('appSummaryText');
+  var fb = document.getElementById('copyFeedback');
+  if (!ta) return;
+  ta.value = collectApplicationBody();
+  var text = ta.value;
+  function done(ok) {
+    if (fb) fb.textContent = ok ? 'Copied to clipboard.' : 'Select the text above and copy manually (Ctrl+C).';
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { done(true); }).catch(function () {
+      ta.select();
+      try { done(document.execCommand('copy')); } catch (e) { done(false); }
+    });
+  } else {
+    ta.select();
+    try { done(document.execCommand('copy')); } catch (e) { done(false); }
+  }
+}
+
+function submitApp() {
+  refreshStep4Summary();
+  document.getElementById('sucJob').textContent = document.getElementById('modalTitle').textContent;
+  for (var i = 1; i <= TOTAL; i++) {
+    var s = document.getElementById('step' + i);
+    if (s) s.classList.remove('active');
+  }
+  document.getElementById('formNav').style.display = 'none';
+  document.getElementById('stepBar').style.display = 'none';
+  document.getElementById('formSuccess').classList.add('show');
+}
+
+let expCount = 1;
+function addExp() {
+  expCount++;
+  const d = document.createElement('div');
+  d.className = 'exp-entry';
+  d.id = 'expE' + expCount;
+  d.innerHTML = `<div class="exp-head"><div class="exp-lbl">Experience #${expCount}</div><button type="button" class="exp-rm" onclick="removeExp('expE${expCount}')">&#10005;</button></div><div class="frow"><div class="fg"><label>Company Name</label><input type="text" placeholder="Company Name"></div><div class="fg"><label>Position / Job Title</label><input type="text" placeholder="Your Role"></div></div><div class="frow"><div class="fg"><label>Date Started</label><input type="month"></div><div class="fg"><label>Date Ended</label><input type="month"></div></div><div class="fg"><label>Duties &amp; Responsibilities</label><textarea placeholder="Brief description..."></textarea></div>`;
+  document.getElementById('expContainer').appendChild(d);
+}
+function removeExp(id) { const e = document.getElementById(id); if (e) e.remove(); }
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

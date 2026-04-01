@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Application Requirements — YZ Manpower Services</title>
+<link rel="icon" href="Untitled%20design.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="Untitled%20design.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Main">
+  <a class="nav-logo" href="index.html#home">
+    <div class="nav-logo-mark">YZ</div>
+    <div class="nav-brand"><span>YZ</span> Manpower</div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#home">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#why">Why YZ</a></li>
+    <li class="nav-jobs-link"><a href="jobs.html">Job Openings</a></li>
+    <li><a href="requirements.html" class="active">Requirements</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-ham" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <h1>What to prepare</h1>
+  <p class="page-lead">Advance pooling with <strong>YZ Consultancy Services Inc.</strong> and <strong>YZ Manpower Services</strong>. Gather these before you apply or email your résumé.</p>
+</header>
+
+<section class="about page-subpage" style="padding-top:2rem;">
+  <div class="requirements-prose fade-up">
+    <h3>Résumé &amp; credentials</h3>
+    <ul>
+      <li>Updated résumé or biodata</li>
+      <li>TOR, diploma, and certificates where applicable</li>
+      <li>Proof of eligibility for the role (licenses, NC, etc.)</li>
+    </ul>
+    <h3>Civil &amp; clearance documents</h3>
+    <ul>
+      <li>PSA birth certificate (and dependents’, if applicable)</li>
+      <li>Police and/or NBI clearance (as required)</li>
+    </ul>
+    <h3>Government &amp; benefits</h3>
+    <ul>
+      <li>SSS, PhilHealth, Pag-IBIG, and TIN (or application status)</li>
+      <li>Two valid government-issued IDs</li>
+    </ul>
+    <h3>Health &amp; readiness</h3>
+    <ul>
+      <li>Medical result, if already available</li>
+    </ul>
+    <h3>How to submit</h3>
+    <p>Complete the questionnaire on <a href="jobs.html" style="color:var(--red);">Job openings</a> and follow the email steps, or send your documents directly to <a href="mailto:yz.manpower.agency@gmail.com" style="color:var(--red);">yz.manpower.agency@gmail.com</a> or <a href="mailto:yz.manpowerservices@gmail.com" style="color:var(--red);">yz.manpowerservices@gmail.com</a>. For hiring inquiries, use <a href="contact.html" style="color:var(--red);">Contact</a>.</p>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="footer-brand"><span>YZ</span> Manpower Services</div>
+    <div class="footer-tag">Service First &bull; Customer First</div>
+  </div>
+  <div class="footer-copy">&copy; 2026 YZ Manpower Services. All rights reserved.<br>Subic Bay Freeport Zone, Olongapo, Philippines<br>
+    <a href="mailto:yz.manpower.agency@gmail.com">yz.manpower.agency@gmail.com</a>
+    &middot; <a href="mailto:yz.manpowerservices@gmail.com">yz.manpowerservices@gmail.com</a>
+  </div>
+</footer>
+
+<script>
+function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

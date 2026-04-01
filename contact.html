@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — YZ Manpower Services</title>
+<link rel="icon" href="Untitled%20design.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="Untitled%20design.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Main">
+  <a class="nav-logo" href="index.html#home">
+    <div class="nav-logo-mark">YZ</div>
+    <div class="nav-brand"><span>YZ</span> Manpower</div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#home">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#why">Why YZ</a></li>
+    <li class="nav-jobs-link"><a href="jobs.html">Job Openings</a></li>
+    <li><a href="requirements.html">Requirements</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <div class="nav-ham" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<section class="contact page-subpage" id="contact">
+  <div class="section-label"><span>Get in Touch</span></div>
+  <h2>Let's Work<br>Together</h2>
+  <div class="contact-grid">
+    <div class="contact-info fade-up">
+      <p>Ready to find the right people for your business? Reach out to us today and let's discuss how YZ Manpower Services can support your workforce needs.</p>
+      <div class="c-details">
+        <div class="c-item"><div class="c-icon">&#128205;</div><div><div class="c-lbl">Address</div><div class="c-val">Room 301, 3rd Floor, Sancheon Building<br>Rizal Highway, Greenwoods Park<br>CBD Area, Subic Bay Freeport Zone<br>Olongapo, Philippines 2222</div></div></div>
+        <div class="c-item"><div class="c-icon">&#128222;</div><div><div class="c-lbl">Phone</div><div class="c-val"><a href="tel:+639129846126">0912 984 6126</a></div></div></div>
+        <div class="c-item"><div class="c-icon">&#9993;</div><div><div class="c-lbl">Email</div><div class="c-val"><a href="mailto:yz.manpower.agency@gmail.com">yz.manpower.agency@gmail.com</a><br><a href="mailto:yz.manpowerservices@gmail.com">yz.manpowerservices@gmail.com</a></div></div></div>
+        <div class="c-item"><div class="c-icon">&#128337;</div><div><div class="c-lbl">Office Hours</div><div class="c-val">Mon–Fri: 8:00 AM – 5:00 PM<br>Saturday: 8:00 AM – 12:00 PM</div></div></div>
+      </div>
+      <div class="contact-social-btns">
+        <a href="https://m.me/61558956456076" target="_blank" rel="noopener noreferrer" class="msn-btn">&#128172; Message on Messenger</a>
+        <a href="https://www.facebook.com/profile.php?id=61558956456076" target="_blank" rel="noopener noreferrer" class="fb-btn">Facebook</a>
+      </div>
+      <div class="map-wrap">
+        <div class="map-badge"><div class="map-badge-title">YZ Manpower Services</div><div class="map-badge-sub">Sancheon Bldg., Subic Bay FZ</div></div>
+        <iframe title="YZ Manpower Services on Google Maps" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3858.8!2d120.2840956!3d14.8242932!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3396717cf3fb7a0f%3A0xb0499ce4323187eb!2sYZ%20MANPOWER%20SERVICES!5e0!3m2!1sen!2sph!4v1743465600000" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <a class="map-open-link" href="https://www.google.com/maps/place/YZ+MANPOWER+SERVICES/@14.8242984,120.2815153,975m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3396717cf3fb7a0f:0xb0499ce4323187eb!8m2!3d14.8242932!4d120.2840956!16s%2Fg%2F11l36mxyxg!5m1!1e1?entry=ttu" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
+      </div>
+    </div>
+    <div class="contact-form-wrap fade-up">
+      <form id="contactForm" onsubmit="submitContact(event)">
+        <div class="cf-row">
+          <div class="cf-grp"><label>First Name</label><input type="text" placeholder="Juan" required></div>
+          <div class="cf-grp"><label>Last Name</label><input type="text" placeholder="Dela Cruz" required></div>
+        </div>
+        <div class="cf-grp"><label>Company / Organization</label><input type="text" placeholder="Your Company Name"></div>
+        <div class="cf-grp"><label>Email Address</label><input type="email" placeholder="your@email.com" required></div>
+        <div class="cf-grp"><label>Phone Number</label><input type="tel" placeholder="09XX XXX XXXX"></div>
+        <div class="cf-grp"><label>Type of Inquiry</label><select><option value="">Select a service...</option><option>Skilled Labor Placement</option><option>Administrative &amp; Clerical</option><option>Customer Service Staff</option><option>Construction &amp; Labor</option><option>Security &amp; Logistics</option><option>Executive Staffing</option><option>General Inquiry</option></select></div>
+        <div class="cf-grp"><label>Message</label><textarea placeholder="Tell us about your manpower requirements..."></textarea></div>
+        <button type="submit" class="btn-primary" style="width:100%;border:none;cursor:pointer;">Send Inquiry</button>
+      </form>
+      <div id="contactSuccess" style="display:none;margin-top:1rem;padding:1rem;background:rgba(26,122,74,0.1);border:1px solid rgba(26,122,74,0.3);font-size:0.88rem;color:var(--light);">&#10003; &nbsp;Thank you! We'll get back to you within 24 hours.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="footer-brand"><span>YZ</span> Manpower Services</div>
+    <div class="footer-tag">Service First &bull; Customer First</div>
+  </div>
+  <div class="footer-copy">&copy; 2026 YZ Manpower Services. All rights reserved.<br>Subic Bay Freeport Zone, Olongapo, Philippines<br>
+    <a href="mailto:yz.manpower.agency@gmail.com">yz.manpower.agency@gmail.com</a>
+    &middot; <a href="mailto:yz.manpowerservices@gmail.com">yz.manpowerservices@gmail.com</a>
+  </div>
+</footer>
+
+<script>
+function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
+function submitContact(e) {
+  e.preventDefault();
+  e.target.style.display = 'none';
+  document.getElementById('contactSuccess').style.display = 'block';
+}
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
