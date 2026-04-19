@@ -85,7 +85,7 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   </nav>
   <div class="sidebar-bottom">
     <div class="sidebar-user">Signed in as<strong id="sidebarUser">—</strong></div>
-    <button class="sidebar-signout" onclick="signOut()">Sign Out</button>
+    <button class="sidebar-signout" onclick="confirmSignOut()">Sign Out</button>
   </div>
 </aside>
 
@@ -154,6 +154,7 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../supabase-config.js"></script>
+<script src="../sign-out-modal.js"></script>
 <script>
 async function signOut() { await sb.auth.signOut(); window.location.href = 'login.html'; }
 

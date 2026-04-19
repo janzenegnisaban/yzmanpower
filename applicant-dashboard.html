@@ -112,7 +112,7 @@
           <h1>Hello, <span id="greetName">Applicant</span></h1>
           <p id="greetEmail"></p>
         </div>
-        <button class="btn-signout" onclick="signOut()">Sign Out</button>
+        <button class="btn-signout" onclick="confirmSignOut()">Sign Out</button>
       </div>
 
       <!-- No application yet -->
@@ -267,6 +267,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
+<script src="sign-out-modal.js"></script>
 <script>
 function toggleNav() {
   const n = document.getElementById('navLinks');

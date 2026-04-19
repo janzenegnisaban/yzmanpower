@@ -90,7 +90,7 @@ body { display: flex; min-height: 100vh; }
   </nav>
   <div class="sidebar-bottom">
     <div class="sidebar-user">Signed in as<strong id="sidebarUser">—</strong></div>
-    <button class="sidebar-signout" onclick="signOut()">Sign Out</button>
+    <button class="sidebar-signout" onclick="confirmSignOut()">Sign Out</button>
   </div>
 </aside>
 
@@ -214,6 +214,7 @@ body { display: flex; min-height: 100vh; }
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../supabase-config.js"></script>
+<script src="../sign-out-modal.js"></script>
 <script>
 let currentApp = null;
 let currentUserId = null;
