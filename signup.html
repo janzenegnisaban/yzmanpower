@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account — YZ Manpower Services</title>
+<link rel="icon" href="Untitled%20design.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.auth-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 5.5rem 1.5rem 3rem; position: relative; overflow: hidden; }
+.auth-bg-grad { position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 40%, var(--red-glow) 0%, transparent 65%); pointer-events: none; }
+.auth-bg-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px); background-size: 60px 60px; pointer-events: none; }
+.auth-card { position: relative; z-index: 2; background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.08); border-top: 3px solid var(--red); padding: 2.75rem 2.5rem; width: 100%; max-width: 500px; }
+.auth-logo { text-align: center; margin-bottom: 2rem; }
+.auth-logo-mark { width: 54px; height: 54px; background: var(--red); clip-path: polygon(0 0,100% 0,100% 75%,75% 100%,0 100%); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue',sans-serif; font-size: 1.3rem; color: #fff; margin: 0 auto 0.75rem; }
+.auth-brand { font-family: 'Barlow Condensed',sans-serif; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white); }
+.auth-brand span { color: var(--red); }
+.auth-heading { font-family: 'Bebas Neue',sans-serif; font-size: 2.2rem; letter-spacing: 0.04em; text-align: center; margin-bottom: 0.3rem; }
+.auth-sub { font-size: 0.82rem; color: var(--gray); text-align: center; margin-bottom: 2.25rem; line-height: 1.5; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-field { margin-bottom: 1.25rem; }
+.form-field label { display: block; font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); font-weight: 600; margin-bottom: 0.5rem; }
+.form-field input { width: 100%; background: var(--navy-light); border: 1px solid rgba(255,255,255,0.1); color: var(--white); padding: 0.85rem 1rem; font-family: 'Barlow',sans-serif; font-size: 0.92rem; outline: none; transition: border-color 0.2s; }
+.form-field input:focus { border-color: var(--red); }
+.form-field input::placeholder { color: rgba(168,168,164,0.5); }
+.form-hint { font-size: 0.73rem; color: var(--gray); margin-top: 0.35rem; opacity: 0.8; }
+.alert { padding: 0.75rem 1rem; font-size: 0.82rem; margin-bottom: 1.25rem; display: none; line-height: 1.5; }
+.alert.show { display: block; }
+.alert-error { background: rgba(192,21,15,0.1); border: 1px solid rgba(192,21,15,0.35); color: #ff7b7b; }
+.alert-success { background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.25); color: #4ade80; }
+.btn-submit { width: 100%; background: var(--red); color: #fff; padding: 0.95rem; font-family: 'Barlow',sans-serif; font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; border: none; cursor: pointer; transition: background 0.2s; margin-top: 0.25rem; }
+.btn-submit:hover { background: var(--red-dark); }
+.btn-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+.terms-note { font-size: 0.75rem; color: var(--gray); text-align: center; margin-top: 0.85rem; line-height: 1.5; }
+.auth-rule { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 1.75rem 0 1.5rem; }
+.auth-links { text-align: center; font-size: 0.82rem; color: var(--gray); line-height: 2; }
+.auth-links a { color: var(--red); text-decoration: none; font-weight: 500; }
+.auth-links a:hover { text-decoration: underline; }
+/* Email sent screen */
+.email-sent { display: none; text-align: center; padding: 1rem 0; }
+.email-sent.show { display: block; }
+.email-sent-icon { font-size: 3.5rem; margin-bottom: 1.25rem; }
+.email-sent h2 { font-family: 'Bebas Neue',sans-serif; font-size: 1.9rem; letter-spacing: 0.03em; margin-bottom: 0.75rem; }
+.email-sent p { font-size: 0.85rem; color: var(--gray); line-height: 1.75; margin-bottom: 1.5rem; }
+.email-sent strong { color: var(--white); }
+.btn-resend { background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--gray); padding: 0.6rem 1.4rem; font-family: 'Barlow',sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+.btn-resend:hover { border-color: var(--red); color: var(--white); }
+.btn-resend:disabled { opacity: 0.4; cursor: not-allowed; }
+@media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } .auth-card { padding: 2rem 1.5rem; } }
+</style>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Main">
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-mark">YZ</div>
+    <div class="nav-brand"><span>YZ</span> Manpower</div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="jobs.html">Job Openings</a></li>
+    <li><a href="requirements.html">Requirements</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="login.html" class="nav-cta">Sign In</a></li>
+  </ul>
+  <div class="nav-ham" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="auth-page">
+  <div class="auth-bg-grad"></div>
+  <div class="auth-bg-grid"></div>
+
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-mark">YZ</div>
+      <div class="auth-brand"><span>YZ</span> Manpower Services</div>
+    </div>
+
+    <h1 class="auth-heading">Create Account</h1>
+    <p class="auth-sub">Register to apply for jobs and track your application status</p>
+
+    <div class="alert alert-error" id="errBox"></div>
+    <div class="alert alert-success" id="okBox"></div>
+
+    <form id="signupForm" onsubmit="handleSignup(event)" novalidate>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" placeholder="Juan" required autocomplete="given-name">
+        </div>
+        <div class="form-field">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" placeholder="dela Cruz" required autocomplete="family-name">
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="signupEmail">Email Address</label>
+        <input type="email" id="signupEmail" placeholder="you@example.com" required autocomplete="email">
+      </div>
+      <div class="form-field">
+        <label for="signupPhone">Mobile Number</label>
+        <input type="tel" id="signupPhone" placeholder="09XX-XXX-XXXX" autocomplete="tel">
+      </div>
+      <div class="form-field">
+        <label for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" placeholder="At least 8 characters" required autocomplete="new-password" minlength="8">
+        <p class="form-hint">Minimum 8 characters</p>
+      </div>
+      <div class="form-field">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" placeholder="Repeat your password" required autocomplete="new-password">
+      </div>
+      <button type="submit" class="btn-submit" id="signupBtn">Create Account</button>
+      <p class="terms-note">By creating an account you agree to provide accurate information for your job application.</p>
+    </form>
+
+    <!-- Email verification sent screen -->
+    <div class="email-sent" id="emailSentScreen">
+      <div class="email-sent-icon">&#9993;</div>
+      <h2>Check Your Email</h2>
+      <p>We sent a confirmation link to<br><strong id="sentEmailAddr"></strong></p>
+      <p>Click the link in the email to verify your account. After confirming, you can sign in.</p>
+      <button class="btn-resend" id="resendBtn" onclick="resendEmail()">Resend Email</button>
+      <div class="alert alert-success" id="resendOk" style="margin-top:0.75rem"></div>
+      <div class="alert alert-error" id="resendErr" style="margin-top:0.75rem"></div>
+    </div>
+
+    <hr class="auth-rule">
+    <div class="auth-links" id="footerLinks">
+      Already have an account? <a href="login.html">Sign in here</a><br>
+      <a href="index.html">← Back to Home</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+function toggleNav() {
+  const n = document.getElementById('navLinks');
+  if (n) n.classList.toggle('open');
+}
+
+let lastSignupEmail = '';
+
+function showErr(msg) {
+  const el = document.getElementById('errBox');
+  el.textContent = msg; el.classList.add('show');
+  document.getElementById('okBox').classList.remove('show');
+}
+function clearAlerts() {
+  document.getElementById('errBox').classList.remove('show');
+  document.getElementById('okBox').classList.remove('show');
+}
+
+function showEmailSentScreen(email) {
+  document.getElementById('signupForm').style.display = 'none';
+  document.getElementById('errBox').style.display = 'none';
+  document.getElementById('okBox').style.display = 'none';
+  document.getElementById('sentEmailAddr').textContent = email;
+  document.getElementById('emailSentScreen').classList.add('show');
+}
+
+async function resendEmail() {
+  const btn = document.getElementById('resendBtn');
+  const okEl = document.getElementById('resendOk');
+  const errEl = document.getElementById('resendErr');
+  okEl.classList.remove('show'); errEl.classList.remove('show');
+
+  btn.disabled = true; btn.textContent = 'Sending…';
+
+  const { error } = await sb.auth.resend({
+    type: 'signup',
+    email: lastSignupEmail,
+    options: { emailRedirectTo: window.location.origin + '/confirm.html' }
+  });
+
+  btn.disabled = false; btn.textContent = 'Resend Email';
+
+  if (error) { errEl.textContent = error.message; errEl.classList.add('show'); }
+  else { okEl.textContent = 'Confirmation email resent!'; okEl.classList.add('show'); }
+}
+
+async function handleSignup(e) {
+  e.preventDefault();
+  clearAlerts();
+
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName  = document.getElementById('lastName').value.trim();
+  const email     = document.getElementById('signupEmail').value.trim();
+  const phone     = document.getElementById('signupPhone').value.trim();
+  const password  = document.getElementById('signupPassword').value;
+  const confirm   = document.getElementById('confirmPassword').value;
+
+  if (!firstName || !lastName) { showErr('Please enter your full name.'); return; }
+  if (password.length < 8) { showErr('Password must be at least 8 characters.'); return; }
+  if (password !== confirm) { showErr('Passwords do not match.'); return; }
+
+  const btn = document.getElementById('signupBtn');
+  btn.disabled = true; btn.textContent = 'Creating account…';
+
+  const fullName = `${firstName} ${lastName}`;
+  lastSignupEmail = email;
+
+  const { data, error } = await sb.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: window.location.origin + '/confirm.html',
+      data: { full_name: fullName, phone }
+    }
+  });
+
+  if (error) {
+    showErr(error.message);
+    btn.disabled = false; btn.textContent = 'Create Account';
+    return;
+  }
+
+  // Note: yz_profiles row is created by the DB trigger on_yz_auth_user_created
+  // We only update it after the user confirms their email (in confirm.html)
+
+  showEmailSentScreen(email);
+}
+
+// Redirect if already logged in
+(async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) window.location.href = 'applicant-dashboard.html';
+})();
+</script>
+</body>
+</html>

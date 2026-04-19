@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confirming Email — YZ Manpower Services</title>
+<link rel="icon" href="Untitled%20design.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.confirm-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 1.5rem; position: relative; overflow: hidden; }
+.confirm-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, var(--red-glow) 0%, transparent 65%); pointer-events: none; }
+.confirm-bg-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px); background-size: 60px 60px; pointer-events: none; }
+.confirm-card { position: relative; z-index: 2; background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.08); border-top: 3px solid var(--red); padding: 3rem 2.5rem; width: 100%; max-width: 440px; text-align: center; }
+.confirm-logo-mark { width: 52px; height: 52px; background: var(--red); clip-path: polygon(0 0,100% 0,100% 75%,75% 100%,0 100%); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue',sans-serif; font-size: 1.2rem; color: #fff; margin: 0 auto 1rem; }
+.confirm-icon { font-size: 3.5rem; margin-bottom: 1.1rem; }
+.confirm-card h1 { font-family: 'Bebas Neue',sans-serif; font-size: 2rem; letter-spacing: 0.03em; margin-bottom: 0.75rem; }
+.confirm-card p { font-size: 0.87rem; color: var(--gray); line-height: 1.75; margin-bottom: 1.75rem; }
+.spinner { display: inline-block; width: 36px; height: 36px; border: 3px solid rgba(192,21,15,0.2); border-top-color: var(--red); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 1.25rem; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.alert { padding: 0.8rem 1rem; font-size: 0.83rem; margin-bottom: 1.25rem; line-height: 1.5; }
+.alert-error { background: rgba(192,21,15,0.1); border: 1px solid rgba(192,21,15,0.35); color: #ff7b7b; }
+.alert-success { background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.25); color: #4ade80; }
+.countdown { font-size: 0.78rem; color: var(--gray); margin-top: 0.75rem; }
+</style>
+</head>
+<body>
+
+<div class="confirm-page">
+  <div class="confirm-bg"></div>
+  <div class="confirm-bg-grid"></div>
+
+  <div class="confirm-card" id="confirmCard">
+    <div class="confirm-logo-mark">YZ</div>
+
+    <!-- Loading state -->
+    <div id="stateLoading">
+      <div class="spinner"></div>
+      <h1>Verifying Email</h1>
+      <p>Please wait while we confirm your email address…</p>
+    </div>
+
+    <!-- Success state -->
+    <div id="stateSuccess" style="display:none">
+      <div class="confirm-icon">&#10003;</div>
+      <h1>Email Confirmed!</h1>
+      <p>Your account has been verified. You can now sign in and start applying for jobs.</p>
+      <a href="login.html" class="btn-primary" style="display:inline-block">Sign In Now</a>
+      <div class="countdown" id="countdown"></div>
+    </div>
+
+    <!-- Error state -->
+    <div id="stateError" style="display:none">
+      <div class="confirm-icon" style="color:var(--red)">&#10007;</div>
+      <h1>Link Expired</h1>
+      <p id="errMsg">This confirmation link has expired or is invalid. Please sign up again or request a new confirmation email.</p>
+      <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+        <a href="signup.html" class="btn-primary" style="font-size:0.78rem">Sign Up Again</a>
+        <a href="login.html" class="btn-ghost" style="font-size:0.78rem">Sign In</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+function showState(id) {
+  ['stateLoading','stateSuccess','stateError'].forEach(s => {
+    document.getElementById(s).style.display = s === id ? 'block' : 'none';
+  });
+}
+
+function startCountdown(seconds, href) {
+  let s = seconds;
+  const el = document.getElementById('countdown');
+  el.textContent = `Redirecting in ${s}s…`;
+  const t = setInterval(() => {
+    s--;
+    if (s <= 0) { clearInterval(t); window.location.href = href; }
+    else { el.textContent = `Redirecting in ${s}s…`; }
+  }, 1000);
+}
+
+(async () => {
+  // Supabase JS v2 with implicit flow auto-processes the hash token on load.
+  // Listen for the SIGNED_IN event that fires when the token in the URL hash is exchanged.
+  let handled = false;
+
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if (handled) return;
+
+    if (event === 'SIGNED_IN' && session) {
+      handled = true;
+
+      // Update yz_profiles with full_name and phone from metadata
+      const meta = session.user.user_metadata || {};
+      await sb.from('yz_profiles').upsert({
+        id:        session.user.id,
+        email:     session.user.email,
+        full_name: meta.full_name || '',
+        phone:     meta.phone || null,
+        role:      'applicant'
+      }, { onConflict: 'id' });
+
+      showState('stateSuccess');
+      startCountdown(5, 'applicant-dashboard.html');
+    }
+  });
+
+  // Also check immediately — in case session is already established
+  // (e.g., page reload after confirmation was already processed)
+  const { data: { session } } = await sb.auth.getSession();
+
+  if (session && !handled) {
+    // Already confirmed; check if it's a fresh confirmation from hash
+    const hash = window.location.hash;
+    const isConfirmation = hash.includes('type=signup') || hash.includes('access_token');
+
+    if (isConfirmation) {
+      handled = true;
+      const meta = session.user.user_metadata || {};
+      await sb.from('yz_profiles').upsert({
+        id:        session.user.id,
+        email:     session.user.email,
+        full_name: meta.full_name || '',
+        phone:     meta.phone || null,
+        role:      'applicant'
+      }, { onConflict: 'id' });
+      showState('stateSuccess');
+      startCountdown(5, 'applicant-dashboard.html');
+    } else {
+      // Already signed in, not a confirmation link — just redirect
+      window.location.href = 'applicant-dashboard.html';
+    }
+    return;
+  }
+
+  // If no hash token and no session, this page was opened directly
+  if (!window.location.hash || !window.location.hash.includes('access_token')) {
+    if (!session) {
+      // No confirmation token and no session — show error after brief wait
+      setTimeout(() => {
+        if (!handled) {
+          showState('stateError');
+          document.getElementById('errMsg').textContent =
+            'No confirmation token found. Please check your email for the verification link, or sign up again.';
+        }
+      }, 2000);
+    }
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — YZ Manpower Services</title>
+<link rel="icon" href="Untitled%20design.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.auth-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 5.5rem 1.5rem 3rem; position: relative; overflow: hidden; }
+.auth-bg-grad { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, var(--red-glow) 0%, transparent 65%); pointer-events: none; }
+.auth-bg-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px); background-size: 60px 60px; pointer-events: none; }
+.auth-card { position: relative; z-index: 2; background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.08); border-top: 3px solid var(--red); padding: 2.75rem 2.5rem; width: 100%; max-width: 460px; }
+.auth-logo { text-align: center; margin-bottom: 2rem; }
+.auth-logo-mark { width: 54px; height: 54px; background: var(--red); clip-path: polygon(0 0,100% 0,100% 75%,75% 100%,0 100%); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue',sans-serif; font-size: 1.3rem; color: #fff; margin: 0 auto 0.75rem; }
+.auth-brand { font-family: 'Barlow Condensed',sans-serif; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white); }
+.auth-brand span { color: var(--red); }
+.auth-heading { font-family: 'Bebas Neue',sans-serif; font-size: 2.2rem; letter-spacing: 0.04em; text-align: center; margin-bottom: 0.3rem; }
+.auth-sub { font-size: 0.82rem; color: var(--gray); text-align: center; margin-bottom: 2.25rem; line-height: 1.5; }
+.form-field { margin-bottom: 1.25rem; }
+.form-field label { display: block; font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); font-weight: 600; margin-bottom: 0.5rem; }
+.form-field input { width: 100%; background: var(--navy-light); border: 1px solid rgba(255,255,255,0.1); color: var(--white); padding: 0.85rem 1rem; font-family: 'Barlow',sans-serif; font-size: 0.92rem; outline: none; transition: border-color 0.2s; }
+.form-field input:focus { border-color: var(--red); }
+.form-field input::placeholder { color: rgba(168,168,164,0.5); }
+.alert { padding: 0.75rem 1rem; font-size: 0.82rem; margin-bottom: 1.25rem; display: none; line-height: 1.5; }
+.alert.show { display: block; }
+.alert-error { background: rgba(192,21,15,0.1); border: 1px solid rgba(192,21,15,0.35); color: #ff7b7b; }
+.alert-success { background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.25); color: #4ade80; }
+.btn-submit { width: 100%; background: var(--red); color: #fff; padding: 0.95rem; font-family: 'Barlow',sans-serif; font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; border: none; cursor: pointer; transition: background 0.2s; margin-top: 0.25rem; }
+.btn-submit:hover { background: var(--red-dark); }
+.btn-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+.auth-rule { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 1.75rem 0 1.5rem; }
+.auth-links { text-align: center; font-size: 0.82rem; color: var(--gray); line-height: 2; }
+.auth-links a { color: var(--red); text-decoration: none; font-weight: 500; }
+.auth-links a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Main">
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-mark">YZ</div>
+    <div class="nav-brand"><span>YZ</span> Manpower</div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="jobs.html">Job Openings</a></li>
+    <li><a href="requirements.html">Requirements</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="signup.html" class="nav-cta">Create Account</a></li>
+  </ul>
+  <div class="nav-ham" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="auth-page">
+  <div class="auth-bg-grad"></div>
+  <div class="auth-bg-grid"></div>
+
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-mark">YZ</div>
+      <div class="auth-brand"><span>YZ</span> Manpower Services</div>
+    </div>
+
+    <h1 class="auth-heading">Welcome Back</h1>
+    <p class="auth-sub">Sign in to your applicant portal or admin dashboard</p>
+
+    <div class="alert alert-error" id="errBox"></div>
+    <div class="alert alert-success" id="okBox"></div>
+
+    <form id="loginForm" onsubmit="handleLogin(event)" novalidate>
+      <div class="form-field">
+        <label for="loginEmail">Email Address</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com" required autocomplete="email">
+      </div>
+      <div class="form-field">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn-submit" id="loginBtn">Sign In</button>
+    </form>
+
+    <!-- Resend confirmation prompt (shown only when email not confirmed) -->
+    <div id="resendPrompt" style="display:none;margin-top:1.25rem;padding:1rem;background:rgba(251,191,36,0.07);border:1px solid rgba(251,191,36,0.2);">
+      <p style="font-size:0.8rem;color:#fbbf24;margin-bottom:0.75rem;line-height:1.5;">Your email hasn't been confirmed yet. Check your inbox or resend the confirmation link.</p>
+      <button onclick="resendConfirmation()" id="resendLoginBtn" style="background:transparent;border:1px solid rgba(251,191,36,0.4);color:#fbbf24;padding:0.45rem 1rem;font-family:'Barlow',sans-serif;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;">Resend Confirmation Email</button>
+      <div id="resendLoginOk" style="display:none;font-size:0.78rem;color:#4ade80;margin-top:0.5rem;"></div>
+    </div>
+
+    <hr class="auth-rule">
+    <div class="auth-links">
+      Don't have an account? <a href="signup.html">Sign up here</a><br>
+      <a href="index.html">← Back to Home</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+function toggleNav() {
+  const n = document.getElementById('navLinks');
+  if (n) n.classList.toggle('open');
+}
+
+function showErr(msg) {
+  const el = document.getElementById('errBox');
+  el.textContent = msg; el.classList.add('show');
+  document.getElementById('okBox').classList.remove('show');
+}
+function showOk(msg) {
+  const el = document.getElementById('okBox');
+  el.textContent = msg; el.classList.add('show');
+  document.getElementById('errBox').classList.remove('show');
+}
+function clearAlerts() {
+  document.getElementById('errBox').classList.remove('show');
+  document.getElementById('okBox').classList.remove('show');
+}
+
+async function redirectByRole(userId) {
+  let { data: profile } = await sb.from('yz_profiles').select('role').eq('id', userId).single();
+  if (!profile) {
+    const { data: { user } } = await sb.auth.getUser();
+    await sb.from('yz_profiles').insert({ id: userId, email: user.email, role: 'applicant' });
+    profile = { role: 'applicant' };
+  }
+  if (profile.role === 'admin' || profile.role === 'hr') {
+    window.location.href = 'admin/index.html';
+  } else {
+    window.location.href = 'applicant-dashboard.html';
+  }
+}
+
+let lastLoginEmail = '';
+
+async function resendConfirmation() {
+  const btn = document.getElementById('resendLoginBtn');
+  const okEl = document.getElementById('resendLoginOk');
+  btn.disabled = true; btn.textContent = 'Sending…';
+
+  const { error } = await sb.auth.resend({
+    type: 'signup',
+    email: lastLoginEmail,
+    options: { emailRedirectTo: window.location.origin + '/confirm.html' }
+  });
+
+  btn.disabled = false; btn.textContent = 'Resend Confirmation Email';
+  okEl.style.display = 'block';
+  okEl.textContent = error ? 'Error: ' + error.message : 'Confirmation email resent! Check your inbox.';
+}
+
+async function handleLogin(e) {
+  e.preventDefault();
+  clearAlerts();
+  document.getElementById('resendPrompt').style.display = 'none';
+
+  const btn = document.getElementById('loginBtn');
+  btn.disabled = true; btn.textContent = 'Signing in…';
+
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  lastLoginEmail = email;
+
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+  if (error) {
+    // Detect unconfirmed email error
+    if (error.message.toLowerCase().includes('email not confirmed') ||
+        error.message.toLowerCase().includes('confirm')) {
+      showErr('Your email address has not been confirmed yet.');
+      document.getElementById('resendPrompt').style.display = 'block';
+    } else {
+      showErr(error.message);
+    }
+    btn.disabled = false; btn.textContent = 'Sign In';
+    return;
+  }
+
+  showOk('Login successful! Redirecting…');
+  await redirectByRole(data.user.id);
+}
+
+// Redirect if already logged in
+(async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) await redirectByRole(session.user.id);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply Online — YZ Manpower Services</title>
+<link rel="icon" href="Untitled%20design.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.apply-page { padding: 6rem 1.5rem 4rem; min-height: 100vh; }
+.apply-wrap { max-width: 780px; margin: 0 auto; }
+.apply-header { margin-bottom: 2.5rem; }
+.apply-header .section-label { margin-bottom: 0.75rem; }
+.apply-header h1 { font-family: 'Bebas Neue',sans-serif; font-size: clamp(2.4rem,4vw,3.4rem); letter-spacing: 0.02em; line-height: 1; margin-bottom: 0.6rem; }
+.apply-header p { font-size: 0.9rem; color: var(--gray); line-height: 1.7; max-width: 520px; }
+.apply-form { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.07); border-top: 3px solid var(--red); padding: 2.5rem; }
+.form-section { margin-bottom: 2.5rem; }
+.form-section-title { font-family: 'Barlow Condensed',sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--red); border-bottom: 1px solid rgba(192,21,15,0.2); padding-bottom: 0.6rem; margin-bottom: 1.5rem; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.form-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.form-group { display: flex; flex-direction: column; }
+.form-group.full { grid-column: 1 / -1; }
+.form-group label { font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); font-weight: 600; margin-bottom: 0.45rem; }
+.form-group input,
+.form-group select,
+.form-group textarea { background: var(--navy-light); border: 1px solid rgba(255,255,255,0.1); color: var(--white); padding: 0.8rem 1rem; font-family: 'Barlow',sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; width: 100%; }
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--red); }
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: rgba(168,168,164,0.5); }
+.form-group select option { background: var(--navy-mid); }
+.form-group textarea { resize: vertical; min-height: 90px; }
+.form-hint { font-size: 0.72rem; color: var(--gray); margin-top: 0.35rem; opacity: 0.75; }
+.checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.check-item { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; padding: 0.6rem 0.85rem; background: var(--navy-light); border: 1px solid rgba(255,255,255,0.07); transition: border-color 0.2s; }
+.check-item:hover { border-color: rgba(192,21,15,0.35); }
+.check-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--red); flex-shrink: 0; cursor: pointer; }
+.check-item span { font-size: 0.82rem; color: var(--light); }
+.file-drop { border: 1px dashed rgba(255,255,255,0.18); padding: 1.5rem; text-align: center; cursor: pointer; transition: border-color 0.2s; position: relative; }
+.file-drop:hover { border-color: rgba(192,21,15,0.5); }
+.file-drop input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+.file-drop-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+.file-drop-text { font-size: 0.82rem; color: var(--gray); }
+.file-drop-text strong { color: var(--red); }
+.file-name { font-size: 0.78rem; color: #4ade80; margin-top: 0.5rem; display: none; }
+.alert { padding: 0.8rem 1rem; font-size: 0.84rem; margin-bottom: 1.5rem; display: none; line-height: 1.5; }
+.alert.show { display: block; }
+.alert-error { background: rgba(192,21,15,0.1); border: 1px solid rgba(192,21,15,0.35); color: #ff7b7b; }
+.alert-success { background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.25); color: #4ade80; }
+.form-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.btn-submit-app { background: var(--red); color: #fff; padding: 0.95rem 2.5rem; font-family: 'Barlow',sans-serif; font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; border: none; cursor: pointer; transition: background 0.2s; }
+.btn-submit-app:hover { background: var(--red-dark); }
+.btn-submit-app:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-cancel { color: var(--gray); font-size: 0.82rem; text-decoration: none; letter-spacing: 0.08em; }
+.btn-cancel:hover { color: var(--white); }
+.success-screen { display: none; text-align: center; padding: 3rem 2rem; }
+.success-screen.show { display: block; }
+.success-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+.success-screen h2 { font-family: 'Bebas Neue',sans-serif; font-size: 2rem; letter-spacing: 0.04em; margin-bottom: 0.75rem; }
+.success-screen p { font-size: 0.9rem; color: var(--gray); line-height: 1.7; margin-bottom: 2rem; max-width: 420px; margin-left: auto; margin-right: auto; }
+.already-applied { display: none; background: rgba(192,21,15,0.08); border: 1px solid rgba(192,21,15,0.25); padding: 2rem; text-align: center; margin-bottom: 2rem; }
+.already-applied.show { display: block; }
+.already-applied h3 { font-family: 'Bebas Neue',sans-serif; font-size: 1.4rem; margin-bottom: 0.5rem; }
+.already-applied p { font-size: 0.85rem; color: var(--gray); margin-bottom: 1rem; }
+@media (max-width: 640px) {
+  .form-grid, .form-grid.cols-3, .checklist { grid-template-columns: 1fr; }
+  .apply-form { padding: 1.75rem 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Main">
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-mark">YZ</div>
+    <div class="nav-brand"><span>YZ</span> Manpower</div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="jobs.html" class="nav-jobs-link">Job Openings</a></li>
+    <li><a href="requirements.html">Requirements</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li id="navAuthLink"><a href="login.html" class="nav-cta">Sign In</a></li>
+  </ul>
+  <div class="nav-ham" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="apply-page">
+  <div class="apply-wrap">
+    <div class="apply-header fade-up">
+      <div class="section-label"><span>Careers</span></div>
+      <h1>Apply <span style="color:var(--red)">Online</span></h1>
+      <p>Fill out the form below to submit your application. Our HR team will review it and contact you within 3–5 business days.</p>
+    </div>
+
+    <div class="alert alert-error" id="topError"></div>
+
+    <!-- Already applied notice -->
+    <div class="already-applied" id="alreadyApplied">
+      <h3>Application Already Submitted</h3>
+      <p>You have already submitted an application. Track your status on your dashboard.</p>
+      <a href="applicant-dashboard.html" class="btn-primary">View My Application</a>
+    </div>
+
+    <!-- Application Form -->
+    <div class="apply-form" id="applyForm">
+      <div class="alert alert-error" id="formError"></div>
+      <div class="alert alert-success" id="formSuccess"></div>
+
+      <!-- SUCCESS SCREEN -->
+      <div class="success-screen" id="successScreen">
+        <div class="success-icon">&#10003;</div>
+        <h2>Application Submitted!</h2>
+        <p>Thank you for applying. Our HR team will review your application and reach out to you within 3–5 business days.</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <a href="applicant-dashboard.html" class="btn-primary">View My Dashboard</a>
+          <a href="jobs.html" class="btn-ghost">Browse More Jobs</a>
+        </div>
+      </div>
+
+      <!-- FORM BODY -->
+      <form id="applicationForm" onsubmit="handleSubmit(event)" novalidate>
+
+        <!-- Position -->
+        <div class="form-section">
+          <div class="form-section-title">Position Applied For</div>
+          <div class="form-group">
+            <label for="positionSelect">Select Position <span style="color:var(--red)">*</span></label>
+            <select id="positionSelect" required>
+              <option value="">— Choose a position —</option>
+              <optgroup label="Production &amp; Warehouse">
+                <option>Production Operator</option>
+                <option>Sewer</option>
+                <option>Warehouse Staff</option>
+                <option>Line Leaders / Production Section Leader</option>
+                <option>Production Planner</option>
+                <option>Production Manager</option>
+                <option>Driver</option>
+              </optgroup>
+              <optgroup label="Engineering &amp; Technical">
+                <option>Production Engineers / Production Technicians</option>
+                <option>Customer Quality Engineer</option>
+                <option>Inspectors</option>
+                <option>Forklift Operator</option>
+                <option>Electrician</option>
+                <option>Maintenance</option>
+                <option>Safety Officer</option>
+                <option>Pollution Control Officer (PCO)</option>
+              </optgroup>
+              <optgroup label="HR / Admin &amp; Office">
+                <option>HR Assistant / HR &amp; Admin</option>
+                <option>Office &amp; Admin</option>
+                <option>IT Assistant</option>
+                <option>Import &amp; Export Officer</option>
+                <option>Liaison Officer</option>
+              </optgroup>
+              <optgroup label="Finance &amp; Accounting">
+                <option>Accounting Staff</option>
+                <option>Accounting Manager</option>
+                <option>Cost Accountant</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+
+        <!-- Personal Information -->
+        <div class="form-section">
+          <div class="form-section-title">Personal Information</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="fullName">Full Name <span style="color:var(--red)">*</span></label>
+              <input type="text" id="fullName" placeholder="Juan dela Cruz" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="appEmail">Email Address <span style="color:var(--red)">*</span></label>
+              <input type="email" id="appEmail" placeholder="you@example.com" required autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="appPhone">Mobile Number</label>
+              <input type="tel" id="appPhone" placeholder="09XX-XXX-XXXX" autocomplete="tel">
+            </div>
+            <div class="form-group">
+              <label for="appDob">Date of Birth</label>
+              <input type="date" id="appDob">
+            </div>
+            <div class="form-group">
+              <label for="appGender">Gender</label>
+              <select id="appGender">
+                <option value="">— Select —</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="appCivil">Civil Status</label>
+              <select id="appCivil">
+                <option value="">— Select —</option>
+                <option>Single</option>
+                <option>Married</option>
+                <option>Widowed</option>
+                <option>Separated</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label for="appAddress">Home Address</label>
+              <input type="text" id="appAddress" placeholder="Street, Barangay, City, Province">
+            </div>
+            <div class="form-group full">
+              <label for="appEducation">Highest Educational Attainment</label>
+              <select id="appEducation">
+                <option value="">— Select —</option>
+                <option>High School Graduate</option>
+                <option>Senior High School Graduate</option>
+                <option>Vocational / Technical Graduate</option>
+                <option>College Undergraduate</option>
+                <option>College Graduate (Bachelor's Degree)</option>
+                <option>Post-Graduate / Master's Degree</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Government Requirements -->
+        <div class="form-section">
+          <div class="form-section-title">Government &amp; Pre-Employment Requirements</div>
+          <p class="form-hint" style="margin-bottom:1rem;">Check all documents you currently have ready. These are required before deployment.</p>
+          <div class="checklist">
+            <label class="check-item">
+              <input type="checkbox" name="req" value="sss"> <span>SSS Number</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="req" value="philhealth"> <span>PhilHealth Number</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="req" value="pagibig"> <span>Pag-IBIG Number</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="req" value="tin"> <span>TIN (Tax Identification Number)</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="req" value="police_clearance"> <span>Police Clearance</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="req" value="nbi_clearance"> <span>NBI Clearance</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="req" value="birth_certificate"> <span>Birth Certificate (PSA)</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="req" value="medical_cert"> <span>Medical Certificate</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Resume Upload -->
+        <div class="form-section">
+          <div class="form-section-title">Resume / CV Upload</div>
+          <div class="file-drop" id="fileDrop">
+            <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" onchange="handleFileChange(this)">
+            <div class="file-drop-icon">&#128196;</div>
+            <div class="file-drop-text">
+              <strong>Click to upload</strong> or drag and drop your resume<br>
+              PDF, DOC, DOCX — max 5 MB
+            </div>
+            <div class="file-name" id="fileName"></div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="form-actions">
+          <button type="submit" class="btn-submit-app" id="submitBtn">Submit Application</button>
+          <a href="jobs.html" class="btn-cancel">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+function toggleNav() {
+  const n = document.getElementById('navLinks');
+  if (n) n.classList.toggle('open');
+}
+
+function handleFileChange(input) {
+  const fn = document.getElementById('fileName');
+  if (input.files.length) {
+    fn.textContent = '✓ ' + input.files[0].name;
+    fn.style.display = 'block';
+  } else {
+    fn.style.display = 'none';
+  }
+}
+
+function showErr(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg; el.classList.add('show');
+}
+function clearAlerts() {
+  ['topError','formError','formSuccess'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('show');
+  });
+}
+
+// Pre-fill position from URL param (from jobs.html Apply Now buttons)
+function prefillPosition() {
+  const params = new URLSearchParams(window.location.search);
+  const pos = params.get('position');
+  if (pos) {
+    const sel = document.getElementById('positionSelect');
+    for (let i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].text === pos) { sel.selectedIndex = i; break; }
+    }
+  }
+}
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  clearAlerts();
+
+  const position = document.getElementById('positionSelect').value;
+  const fullName = document.getElementById('fullName').value.trim();
+  const email    = document.getElementById('appEmail').value.trim();
+  const phone    = document.getElementById('appPhone').value.trim();
+  const dob      = document.getElementById('appDob').value;
+  const gender   = document.getElementById('appGender').value;
+  const civil    = document.getElementById('appCivil').value;
+  const address  = document.getElementById('appAddress').value.trim();
+  const edu      = document.getElementById('appEducation').value;
+
+  if (!position) { showErr('formError', 'Please select the position you are applying for.'); return; }
+  if (!fullName) { showErr('formError', 'Please enter your full name.'); return; }
+  if (!email)    { showErr('formError', 'Please enter your email address.'); return; }
+
+  const checkedBoxes = document.querySelectorAll('input[name="req"]:checked');
+  const govReqs = {};
+  checkedBoxes.forEach(cb => { govReqs[cb.value] = true; });
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true; btn.textContent = 'Submitting…';
+
+  const { data: { user } } = await sb.auth.getUser();
+
+  // Upload resume if provided
+  let resumeUrl = null;
+  const fileInput = document.getElementById('resumeFile');
+  if (fileInput.files.length) {
+    const file = fileInput.files[0];
+    const ext  = file.name.split('.').pop();
+    const path = `${user.id}/${Date.now()}.${ext}`;
+    const { data: uploadData, error: uploadErr } = await sb.storage
+      .from('yz-resumes')
+      .upload(path, file, { upsert: true });
+    if (uploadErr) {
+      showErr('formError', 'Resume upload failed: ' + uploadErr.message);
+      btn.disabled = false; btn.textContent = 'Submit Application';
+      return;
+    }
+    resumeUrl = uploadData.path;
+  }
+
+  const { error } = await sb.from('yz_applications').insert({
+    applicant_id:    user.id,
+    position_applied: position,
+    full_name:       fullName,
+    email,
+    phone:           phone || null,
+    date_of_birth:   dob || null,
+    gender:          gender || null,
+    civil_status:    civil || null,
+    address:         address || null,
+    education:       edu || null,
+    gov_requirements: govReqs,
+    resume_url:      resumeUrl,
+    status:          'pending'
+  });
+
+  if (error) {
+    showErr('formError', error.message);
+    btn.disabled = false; btn.textContent = 'Submit Application';
+    return;
+  }
+
+  document.getElementById('applicationForm').style.display = 'none';
+  document.getElementById('successScreen').classList.add('show');
+}
+
+// Auth guard + prefill
+(async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) {
+    window.location.href = 'login.html?redirect=apply.html';
+    return;
+  }
+
+  // Update nav
+  const navLink = document.getElementById('navAuthLink');
+  if (navLink) navLink.innerHTML = '<a href="applicant-dashboard.html">My Dashboard</a>';
+
+  // Check for existing application
+  const { data: existing } = await sb
+    .from('yz_applications')
+    .select('id, status')
+    .eq('applicant_id', session.user.id)
+    .single();
+
+  if (existing) {
+    document.getElementById('alreadyApplied').classList.add('show');
+    document.getElementById('applicationForm').style.display = 'none';
+    return;
+  }
+
+  // Pre-fill from profile
+  const { data: profile } = await sb
+    .from('yz_profiles')
+    .select('full_name, email, phone')
+    .eq('id', session.user.id)
+    .single();
+
+  if (profile) {
+    if (profile.full_name) document.getElementById('fullName').value = profile.full_name;
+    if (profile.email)     document.getElementById('appEmail').value = profile.email;
+    if (profile.phone)     document.getElementById('appPhone').value = profile.phone;
+  }
+
+  prefillPosition();
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+})();
+</script>
+</body>
+</html>

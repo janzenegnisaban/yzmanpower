@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Dashboard — YZ Manpower Services</title>
+<link rel="icon" href="Untitled%20design.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.dash-page { padding: 5.5rem 1.5rem 4rem; min-height: 100vh; }
+.dash-wrap { max-width: 860px; margin: 0 auto; }
+.dash-topbar { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.dash-greeting h1 { font-family: 'Bebas Neue',sans-serif; font-size: clamp(2rem,3.5vw,2.8rem); letter-spacing: 0.02em; line-height: 1.1; }
+.dash-greeting h1 span { color: var(--red); }
+.dash-greeting p { font-size: 0.85rem; color: var(--gray); margin-top: 0.3rem; }
+.btn-signout { background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--gray); padding: 0.55rem 1.2rem; font-family: 'Barlow',sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+.btn-signout:hover { border-color: var(--red); color: var(--white); }
+/* No application card */
+.no-app-card { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.07); border-top: 3px solid var(--red); padding: 3rem 2rem; text-align: center; display: none; }
+.no-app-card.show { display: block; }
+.no-app-icon { font-size: 3rem; margin-bottom: 1rem; }
+.no-app-card h2 { font-family: 'Bebas Neue',sans-serif; font-size: 1.8rem; letter-spacing: 0.03em; margin-bottom: 0.75rem; }
+.no-app-card p { font-size: 0.88rem; color: var(--gray); line-height: 1.7; margin-bottom: 2rem; max-width: 380px; margin-left: auto; margin-right: auto; }
+/* Application card */
+.app-card { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.07); border-left: 4px solid var(--red); padding: 2rem 2rem 1.75rem; display: none; }
+.app-card.show { display: block; }
+.app-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.app-position { font-family: 'Bebas Neue',sans-serif; font-size: 1.6rem; letter-spacing: 0.03em; line-height: 1.1; }
+.app-date { font-size: 0.75rem; color: var(--gray); letter-spacing: 0.1em; margin-top: 0.25rem; }
+/* Status badge */
+.status-badge { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.4rem 1rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.status-pending  { background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.3); color: #fbbf24; }
+.status-reviewing { background: rgba(99,179,237,0.12); border: 1px solid rgba(99,179,237,0.3); color: #63b3ed; }
+.status-approved { background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.25); color: #4ade80; }
+.status-hired    { background: rgba(192,21,15,0.12); border: 1px solid rgba(192,21,15,0.35); color: #ff7b7b; }
+.status-rejected { background: rgba(100,100,100,0.12); border: 1px solid rgba(100,100,100,0.3); color: var(--gray); }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+/* Progress steps */
+.progress-track { margin-bottom: 2rem; }
+.progress-label { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.85rem; }
+.progress-steps { display: flex; align-items: center; }
+.prog-step { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; }
+.prog-step:not(:last-child)::after { content: ''; position: absolute; top: 14px; left: 50%; right: -50%; height: 2px; background: rgba(255,255,255,0.08); z-index: 0; }
+.prog-step.done:not(:last-child)::after { background: var(--red); }
+.prog-dot { width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.12); background: var(--navy); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; position: relative; z-index: 1; }
+.prog-step.done .prog-dot { border-color: var(--red); background: var(--red); color: #fff; }
+.prog-step.current .prog-dot { border-color: var(--red); color: var(--red); }
+.prog-lbl { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-top: 0.4rem; text-align: center; }
+.prog-step.done .prog-lbl, .prog-step.current .prog-lbl { color: var(--white); }
+/* Details grid */
+.details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 2rem; }
+.detail-item {}
+.detail-label { font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.3rem; }
+.detail-value { font-size: 0.9rem; color: var(--light); }
+/* Requirements summary */
+.req-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+.req-tag { font-size: 0.72rem; background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.2); color: #4ade80; padding: 0.25rem 0.65rem; }
+.req-tag.missing { background: rgba(100,100,100,0.08); border-color: rgba(255,255,255,0.1); color: var(--gray); }
+/* HR notes */
+.hr-note { background: var(--navy-light); border-left: 3px solid var(--red); padding: 1rem 1.25rem; margin-top: 1.5rem; display: none; }
+.hr-note.show { display: block; }
+.hr-note-label { font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); margin-bottom: 0.4rem; }
+.hr-note-text { font-size: 0.88rem; color: var(--light); line-height: 1.6; }
+/* App card footer */
+.app-card-footer { display: flex; gap: 1rem; flex-wrap: wrap; padding-top: 1.5rem; margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); }
+/* Profile card */
+.profile-card { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.07); padding: 1.75rem 2rem; margin-top: 1.5rem; display: none; }
+.profile-card.show { display: block; }
+.profile-card-title { font-family: 'Barlow Condensed',sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 1.25rem; }
+.profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.profile-field { display: flex; flex-direction: column; gap: 0.3rem; }
+.profile-field label { font-size: 0.67rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray); }
+.profile-field span { font-size: 0.88rem; color: var(--light); }
+/* Loading */
+.dash-loading { text-align: center; padding: 4rem 2rem; color: var(--gray); font-size: 0.9rem; }
+@media (max-width: 640px) {
+  .details-grid, .profile-grid { grid-template-columns: 1fr; }
+  .progress-steps { gap: 0; }
+  .prog-lbl { font-size: 0.58rem; }
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Main">
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-mark">YZ</div>
+    <div class="nav-brand"><span>YZ</span> Manpower</div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="jobs.html">Job Openings</a></li>
+    <li><a href="requirements.html">Requirements</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-ham" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="dash-page">
+  <div class="dash-wrap">
+
+    <div id="dashLoading" class="dash-loading">Loading your dashboard…</div>
+
+    <div id="dashContent" style="display:none">
+
+      <div class="dash-topbar">
+        <div class="dash-greeting">
+          <h1>Hello, <span id="greetName">Applicant</span></h1>
+          <p id="greetEmail"></p>
+        </div>
+        <button class="btn-signout" onclick="signOut()">Sign Out</button>
+      </div>
+
+      <!-- No application yet -->
+      <div class="no-app-card" id="noAppCard">
+        <div class="no-app-icon">&#128196;</div>
+        <h2>No Application Yet</h2>
+        <p>You haven't submitted an application yet. Browse our open positions and apply today.</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <a href="apply.html" class="btn-primary">Apply Now</a>
+          <a href="jobs.html" class="btn-ghost">View Job Openings</a>
+        </div>
+      </div>
+
+      <!-- Application status card -->
+      <div class="app-card" id="appCard">
+        <div class="app-card-header">
+          <div>
+            <div class="app-position" id="appPosition">Position</div>
+            <div class="app-date" id="appDate"></div>
+          </div>
+          <div class="status-badge" id="statusBadge">
+            <div class="status-dot"></div>
+            <span id="statusText">Pending</span>
+          </div>
+        </div>
+
+        <!-- Progress tracker -->
+        <div class="progress-track">
+          <div class="progress-label">Application Progress</div>
+          <div class="progress-steps" id="progressSteps">
+            <div class="prog-step" id="pstep-submitted">
+              <div class="prog-dot">&#10003;</div>
+              <div class="prog-lbl">Submitted</div>
+            </div>
+            <div class="prog-step" id="pstep-reviewing">
+              <div class="prog-dot">2</div>
+              <div class="prog-lbl">Reviewing</div>
+            </div>
+            <div class="prog-step" id="pstep-approved">
+              <div class="prog-dot">3</div>
+              <div class="prog-lbl">Approved</div>
+            </div>
+            <div class="prog-step" id="pstep-hired">
+              <div class="prog-dot">4</div>
+              <div class="prog-lbl">Hired</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Application details -->
+        <div class="details-grid">
+          <div class="detail-item">
+            <div class="detail-label">Full Name</div>
+            <div class="detail-value" id="dFullName">—</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Email</div>
+            <div class="detail-value" id="dEmail">—</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Mobile</div>
+            <div class="detail-value" id="dPhone">—</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Date of Birth</div>
+            <div class="detail-value" id="dDob">—</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Gender</div>
+            <div class="detail-value" id="dGender">—</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Civil Status</div>
+            <div class="detail-value" id="dCivil">—</div>
+          </div>
+          <div class="detail-item" style="grid-column:1/-1">
+            <div class="detail-label">Address</div>
+            <div class="detail-value" id="dAddress">—</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Education</div>
+            <div class="detail-value" id="dEducation">—</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Resume</div>
+            <div class="detail-value" id="dResume">—</div>
+          </div>
+        </div>
+
+        <!-- Gov requirements -->
+        <div>
+          <div class="detail-label" style="margin-bottom:0.5rem">Government Requirements Submitted</div>
+          <div class="req-tags" id="reqTags"></div>
+        </div>
+
+        <!-- HR Note -->
+        <div class="hr-note" id="hrNote">
+          <div class="hr-note-label">Note from HR</div>
+          <div class="hr-note-text" id="hrNoteText"></div>
+        </div>
+
+        <!-- Interview info -->
+        <div class="hr-note" id="interviewInfo" style="border-left-color:#63b3ed;display:none">
+          <div class="hr-note-label" style="color:#63b3ed">Interview Scheduled</div>
+          <div class="hr-note-text" id="interviewInfoText"></div>
+        </div>
+
+        <!-- Deployment info -->
+        <div class="hr-note" id="deployInfo" style="border-left-color:#4ade80;display:none">
+          <div class="hr-note-label" style="color:#4ade80">Deployment Details</div>
+          <div class="hr-note-text" id="deployInfoText"></div>
+        </div>
+
+        <!-- Rejection reason -->
+        <div class="hr-note" id="rejectInfo" style="border-left-color:var(--gray);display:none">
+          <div class="hr-note-label" style="color:var(--gray)">Reason</div>
+          <div class="hr-note-text" id="rejectInfoText"></div>
+        </div>
+
+        <div class="app-card-footer">
+          <a href="jobs.html" class="btn-ghost" style="font-size:0.78rem;">Browse More Jobs</a>
+          <a href="contact.html" class="btn-ghost" style="font-size:0.78rem;">Contact HR</a>
+        </div>
+      </div>
+
+      <!-- Profile info card -->
+      <div class="profile-card" id="profileCard">
+        <div class="profile-card-title">Account Information</div>
+        <div class="profile-grid">
+          <div class="profile-field">
+            <label>Full Name</label>
+            <span id="profName">—</span>
+          </div>
+          <div class="profile-field">
+            <label>Email</label>
+            <span id="profEmail">—</span>
+          </div>
+          <div class="profile-field">
+            <label>Mobile</label>
+            <span id="profPhone">—</span>
+          </div>
+          <div class="profile-field">
+            <label>Account Type</label>
+            <span>Applicant</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /dashContent -->
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+function toggleNav() {
+  const n = document.getElementById('navLinks');
+  if (n) n.classList.toggle('open');
+}
+
+async function signOut() {
+  await sb.auth.signOut();
+  window.location.href = 'login.html';
+}
+
+const REQ_LABELS = {
+  sss: 'SSS', philhealth: 'PhilHealth', pagibig: 'Pag-IBIG',
+  tin: 'TIN', police_clearance: 'Police Clearance', nbi_clearance: 'NBI Clearance',
+  birth_certificate: 'Birth Certificate', medical_cert: 'Medical Certificate'
+};
+
+const STATUS_STEPS = { pending: 1, reviewing: 2, approved: 3, hired: 4, rejected: 1 };
+const STEP_IDS = ['pstep-submitted','pstep-reviewing','pstep-approved','pstep-hired'];
+
+function renderProgress(status) {
+  const level = STATUS_STEPS[status] || 1;
+  STEP_IDS.forEach((id, idx) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('done','current');
+    if (idx + 1 < level) el.classList.add('done');
+    else if (idx + 1 === level) { el.classList.add('done'); }
+  });
+  if (status === 'rejected') {
+    document.getElementById('pstep-submitted').classList.add('done');
+  }
+}
+
+function renderStatusBadge(status) {
+  const badge = document.getElementById('statusBadge');
+  const text  = document.getElementById('statusText');
+  badge.className = 'status-badge status-' + status;
+  const labels = { pending:'Pending Review', reviewing:'Under Review', approved:'Approved', hired:'Hired', rejected:'Rejected' };
+  text.textContent = labels[status] || status;
+}
+
+function val(v) { return v || '—'; }
+
+(async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { window.location.href = 'login.html'; return; }
+
+  const userId = session.user.id;
+
+  // Load profile + application in parallel
+  const [profileRes, appRes] = await Promise.all([
+    sb.from('yz_profiles').select('*').eq('id', userId).single(),
+    sb.from('yz_applications').select('*').eq('applicant_id', userId).order('created_at', { ascending: false }).limit(1).single()
+  ]);
+
+  const profile = profileRes.data;
+  const app     = appRes.data;
+
+  document.getElementById('dashLoading').style.display = 'none';
+  document.getElementById('dashContent').style.display  = 'block';
+
+  // Greet
+  const name = profile?.full_name?.split(' ')[0] || session.user.email.split('@')[0];
+  document.getElementById('greetName').textContent  = name;
+  document.getElementById('greetEmail').textContent = session.user.email;
+
+  // Profile card
+  if (profile) {
+    document.getElementById('profileCard').classList.add('show');
+    document.getElementById('profName').textContent  = val(profile.full_name);
+    document.getElementById('profEmail').textContent = val(profile.email);
+    document.getElementById('profPhone').textContent = val(profile.phone);
+  }
+
+  if (!app) {
+    document.getElementById('noAppCard').classList.add('show');
+    return;
+  }
+
+  // Application card
+  document.getElementById('appCard').classList.add('show');
+  document.getElementById('appPosition').textContent = app.position_applied;
+  document.getElementById('appDate').textContent = 'Submitted ' + new Date(app.created_at).toLocaleDateString('en-PH', { year:'numeric', month:'long', day:'numeric' });
+
+  renderStatusBadge(app.status);
+  renderProgress(app.status);
+
+  document.getElementById('dFullName').textContent  = val(app.full_name);
+  document.getElementById('dEmail').textContent     = val(app.email);
+  document.getElementById('dPhone').textContent     = val(app.phone);
+  document.getElementById('dDob').textContent       = app.date_of_birth ? new Date(app.date_of_birth + 'T00:00:00').toLocaleDateString('en-PH', { year:'numeric', month:'long', day:'numeric' }) : '—';
+  document.getElementById('dGender').textContent    = val(app.gender);
+  document.getElementById('dCivil').textContent     = val(app.civil_status);
+  document.getElementById('dAddress').textContent   = val(app.address);
+  document.getElementById('dEducation').textContent = val(app.education);
+
+  if (app.resume_url) {
+    const { data: { publicUrl } } = sb.storage.from('yz-resumes').getPublicUrl(app.resume_url);
+    document.getElementById('dResume').innerHTML = `<a href="${publicUrl}" target="_blank" style="color:var(--red)">View Resume</a>`;
+  }
+
+  // Gov requirements tags
+  const tagsCont = document.getElementById('reqTags');
+  const reqs = app.gov_requirements || {};
+  Object.entries(REQ_LABELS).forEach(([key, label]) => {
+    const tag = document.createElement('span');
+    tag.className = 'req-tag' + (reqs[key] ? '' : ' missing');
+    tag.textContent = (reqs[key] ? '✓ ' : '✗ ') + label;
+    tagsCont.appendChild(tag);
+  });
+
+  // HR notes
+  if (app.notes) {
+    document.getElementById('hrNote').classList.add('show');
+    document.getElementById('hrNoteText').textContent = app.notes;
+  }
+
+  // Interview info
+  if (app.interview_date) {
+    const intEl = document.getElementById('interviewInfo');
+    intEl.style.display = 'block';
+    const dt = new Date(app.interview_date).toLocaleString('en-PH',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});
+    document.getElementById('interviewInfoText').textContent = dt + (app.interview_location ? ' — ' + app.interview_location : '');
+  }
+
+  // Deployment info
+  if (app.deployment_client || app.deployment_site) {
+    const depEl = document.getElementById('deployInfo');
+    depEl.style.display = 'block';
+    let txt = '';
+    if (app.deployment_client) txt += 'Client: ' + app.deployment_client;
+    if (app.deployment_site)   txt += (txt ? ' | ' : '') + 'Site: ' + app.deployment_site;
+    if (app.deployment_start)  txt += (txt ? ' | ' : '') + 'Start: ' + new Date(app.deployment_start+'T00:00:00').toLocaleDateString('en-PH',{year:'numeric',month:'long',day:'numeric'});
+    document.getElementById('deployInfoText').textContent = txt;
+  }
+
+  // Rejection reason
+  if (app.rejection_reason) {
+    document.getElementById('rejectInfo').style.display = 'block';
+    document.getElementById('rejectInfoText').textContent = app.rejection_reason;
+  }
+})();
+</script>
+</body>
+</html>

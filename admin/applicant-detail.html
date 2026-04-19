@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Applicant Detail — YZ Manpower Admin</title>
+<link rel="icon" href="../Untitled%20design.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body { display: flex; min-height: 100vh; }
+.admin-sidebar { width: 230px; min-width: 230px; background: var(--navy-mid); border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; padding: 1.5rem 0; position: fixed; top: 0; left: 0; height: 100vh; z-index: 100; }
+.sidebar-logo { display: flex; align-items: center; gap: 0.75rem; padding: 0 1.5rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 1.5rem; }
+.sidebar-logo-mark { width: 38px; height: 38px; background: var(--red); clip-path: polygon(0 0,100% 0,100% 75%,75% 100%,0 100%); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue',sans-serif; font-size: 1rem; color: #fff; flex-shrink: 0; }
+.sidebar-brand { font-family: 'Barlow Condensed',sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.3; }
+.sidebar-brand span { color: var(--red); }
+.sidebar-brand small { display: block; font-size: 0.62rem; color: var(--gray); letter-spacing: 0.08em; font-weight: 400; text-transform: uppercase; margin-top: 0.1rem; }
+.sidebar-nav a { display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 1.5rem; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); text-decoration: none; transition: all 0.2s; border-left: 3px solid transparent; }
+.sidebar-nav a:hover, .sidebar-nav a.active { color: var(--white); background: rgba(255,255,255,0.04); border-left-color: var(--red); }
+.sidebar-nav a .nav-icon { font-size: 1rem; }
+.sidebar-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 0.75rem 0; }
+.sidebar-bottom { padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); margin-top: auto; }
+.sidebar-user { font-size: 0.75rem; color: var(--gray); margin-bottom: 0.75rem; }
+.sidebar-user strong { display: block; color: var(--light); font-weight: 600; font-size: 0.8rem; }
+.sidebar-signout { width: 100%; background: transparent; border: 1px solid rgba(255,255,255,0.1); color: var(--gray); padding: 0.5rem; font-family: 'Barlow',sans-serif; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+.sidebar-signout:hover { border-color: var(--red); color: var(--white); }
+.admin-main { margin-left: 230px; flex: 1; padding: 2.5rem; min-height: 100vh; background: var(--navy); }
+.back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.78rem; letter-spacing: 0.1em; text-decoration: none; margin-bottom: 1.75rem; text-transform: uppercase; }
+.back-link:hover { color: var(--white); }
+.detail-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.detail-header-left h1 { font-family: 'Bebas Neue',sans-serif; font-size: 2.2rem; letter-spacing: 0.02em; line-height: 1; }
+.detail-header-left .pos { font-size: 0.85rem; color: var(--gray); margin-top: 0.3rem; }
+.status-badge { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.45rem 1.1rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.status-pending  { background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.3); color: #fbbf24; }
+.status-reviewing { background: rgba(99,179,237,0.12); border: 1px solid rgba(99,179,237,0.3); color: #63b3ed; }
+.status-approved { background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.25); color: #4ade80; }
+.status-hired    { background: rgba(192,21,15,0.12); border: 1px solid rgba(192,21,15,0.35); color: #ff7b7b; }
+.status-rejected { background: rgba(100,100,100,0.12); border: 1px solid rgba(100,100,100,0.3); color: var(--gray); }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.detail-layout { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; align-items: start; }
+.section-card { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.07); padding: 1.75rem; margin-bottom: 1.5rem; }
+.section-card-title { font-family: 'Barlow Condensed',sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); border-bottom: 1px solid rgba(192,21,15,0.2); padding-bottom: 0.6rem; margin-bottom: 1.5rem; }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+.info-item {}
+.info-label { font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.25rem; }
+.info-value { font-size: 0.88rem; color: var(--light); }
+.req-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.5rem; }
+.req-tag { font-size: 0.72rem; padding: 0.25rem 0.65rem; }
+.req-have  { background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.2); color: #4ade80; }
+.req-lacks { background: rgba(100,100,100,0.08); border: 1px solid rgba(255,255,255,0.08); color: var(--gray); }
+/* Action card */
+.action-card { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.07); border-top: 3px solid var(--red); padding: 1.75rem; position: sticky; top: 2rem; }
+.action-title { font-family: 'Barlow Condensed',sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 1.25rem; }
+.action-group { margin-bottom: 1.25rem; }
+.action-group label { display: block; font-size: 0.67rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.45rem; }
+.action-group select,
+.action-group textarea { width: 100%; background: var(--navy-light); border: 1px solid rgba(255,255,255,0.1); color: var(--white); padding: 0.75rem 0.9rem; font-family: 'Barlow',sans-serif; font-size: 0.88rem; outline: none; transition: border-color 0.2s; }
+.action-group select:focus,
+.action-group textarea:focus { border-color: var(--red); }
+.action-group select option { background: var(--navy-mid); }
+.action-group textarea { resize: vertical; min-height: 80px; }
+.btn-save { width: 100%; background: var(--red); color: #fff; padding: 0.85rem; font-family: 'Barlow',sans-serif; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; border: none; cursor: pointer; transition: background 0.2s; }
+.btn-save:hover { background: var(--red-dark); }
+.btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
+.alert { padding: 0.7rem 0.9rem; font-size: 0.8rem; margin-top: 1rem; display: none; }
+.alert.show { display: block; }
+.alert-error { background: rgba(192,21,15,0.1); border: 1px solid rgba(192,21,15,0.35); color: #ff7b7b; }
+.alert-success { background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.25); color: #4ade80; }
+.meta-info { font-size: 0.75rem; color: var(--gray); line-height: 1.8; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,0.06); }
+@media (max-width: 1024px) { .detail-layout { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { .admin-sidebar { display: none; } .admin-main { margin-left: 0; } .info-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<aside class="admin-sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-mark">YZ</div>
+    <div class="sidebar-brand"><span>YZ</span> Manpower<small>Admin Panel</small></div>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="index.html"><span class="nav-icon">&#9632;</span> Dashboard</a>
+    <a href="applications.html" class="active"><span class="nav-icon">&#128196;</span> Applications</a>
+    <a href="pipeline.html"><span class="nav-icon">&#128202;</span> Pipeline</a>
+    <div class="sidebar-divider"></div>
+    <a href="accounts.html"><span class="nav-icon">&#128100;</span> HR Accounts</a>
+    <div class="sidebar-divider"></div>
+    <a href="../index.html"><span class="nav-icon">&#8592;</span> Back to Site</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="sidebar-user">Signed in as<strong id="sidebarUser">—</strong></div>
+    <button class="sidebar-signout" onclick="signOut()">Sign Out</button>
+  </div>
+</aside>
+
+<main class="admin-main" id="mainContent">
+  <a href="applications.html" class="back-link">&#8592; Back to Applications</a>
+  <div id="loadingMsg" style="color:var(--gray);font-size:0.9rem">Loading applicant data…</div>
+  <div id="pageContent" style="display:none">
+
+    <div class="detail-header">
+      <div class="detail-header-left">
+        <h1 id="hName">—</h1>
+        <div class="pos" id="hPosition">—</div>
+      </div>
+      <div class="status-badge" id="statusBadge">
+        <div class="status-dot"></div>
+        <span id="statusText">—</span>
+      </div>
+    </div>
+
+    <div class="detail-layout">
+      <!-- Left column -->
+      <div>
+        <div class="section-card">
+          <div class="section-card-title">Personal Information</div>
+          <div class="info-grid">
+            <div class="info-item"><div class="info-label">Full Name</div><div class="info-value" id="dName">—</div></div>
+            <div class="info-item"><div class="info-label">Email</div><div class="info-value" id="dEmail">—</div></div>
+            <div class="info-item"><div class="info-label">Mobile</div><div class="info-value" id="dPhone">—</div></div>
+            <div class="info-item"><div class="info-label">Date of Birth</div><div class="info-value" id="dDob">—</div></div>
+            <div class="info-item"><div class="info-label">Gender</div><div class="info-value" id="dGender">—</div></div>
+            <div class="info-item"><div class="info-label">Civil Status</div><div class="info-value" id="dCivil">—</div></div>
+            <div class="info-item" style="grid-column:1/-1"><div class="info-label">Address</div><div class="info-value" id="dAddress">—</div></div>
+            <div class="info-item"><div class="info-label">Education</div><div class="info-value" id="dEdu">—</div></div>
+            <div class="info-item"><div class="info-label">Resume</div><div class="info-value" id="dResume">—</div></div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-card-title">Government Requirements</div>
+          <div class="req-tags" id="reqTags"></div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-card-title">Application Timeline</div>
+          <div class="info-grid">
+            <div class="info-item"><div class="info-label">Date Applied</div><div class="info-value" id="dCreated">—</div></div>
+            <div class="info-item"><div class="info-label">Last Updated</div><div class="info-value" id="dUpdated">—</div></div>
+            <div class="info-item"><div class="info-label">Reviewed By</div><div class="info-value" id="dReviewedBy">—</div></div>
+            <div class="info-item"><div class="info-label">Reviewed At</div><div class="info-value" id="dReviewedAt">—</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column — action panel -->
+      <div>
+        <div class="action-card">
+          <div class="action-title">Update Application</div>
+          <div class="action-group">
+            <label for="statusSelect">Application Status</label>
+            <select id="statusSelect" onchange="onStatusChange()">
+              <option value="pending">Pending Review</option>
+              <option value="reviewing">Under Review</option>
+              <option value="approved">Approved</option>
+              <option value="hired">Hired</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+          <div class="action-group">
+            <label for="notesInput">HR Notes (visible to applicant)</label>
+            <textarea id="notesInput" placeholder="Add a note for the applicant…"></textarea>
+          </div>
+
+          <!-- Interview section -->
+          <div id="interviewSection" style="display:none">
+            <div style="font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--red);font-weight:700;padding:0.6rem 0 0.5rem;border-top:1px solid rgba(192,21,15,0.15);margin-bottom:0.75rem;margin-top:0.5rem">&#128197; Interview Schedule</div>
+            <div class="action-group">
+              <label>Date &amp; Time</label>
+              <input type="datetime-local" id="interviewDate" style="width:100%;background:var(--navy-light);border:1px solid rgba(255,255,255,0.1);color:var(--white);padding:0.75rem 0.9rem;font-family:'Barlow',sans-serif;font-size:0.88rem;outline:none;">
+            </div>
+            <div class="action-group">
+              <label>Location</label>
+              <input type="text" id="interviewLocation" placeholder="e.g. YZ Manpower Office" style="width:100%;background:var(--navy-light);border:1px solid rgba(255,255,255,0.1);color:var(--white);padding:0.75rem 0.9rem;font-family:'Barlow',sans-serif;font-size:0.88rem;outline:none;">
+            </div>
+          </div>
+
+          <!-- Deployment section -->
+          <div id="deploymentSection" style="display:none">
+            <div style="font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--red);font-weight:700;padding:0.6rem 0 0.5rem;border-top:1px solid rgba(192,21,15,0.15);margin-bottom:0.75rem;margin-top:0.5rem">&#128188; Deployment Details</div>
+            <div class="action-group">
+              <label>Client Company</label>
+              <input type="text" id="deployClient" placeholder="Company name" style="width:100%;background:var(--navy-light);border:1px solid rgba(255,255,255,0.1);color:var(--white);padding:0.75rem 0.9rem;font-family:'Barlow',sans-serif;font-size:0.88rem;outline:none;">
+            </div>
+            <div class="action-group">
+              <label>Job Site / Location</label>
+              <input type="text" id="deploySite" placeholder="Work site" style="width:100%;background:var(--navy-light);border:1px solid rgba(255,255,255,0.1);color:var(--white);padding:0.75rem 0.9rem;font-family:'Barlow',sans-serif;font-size:0.88rem;outline:none;">
+            </div>
+            <div class="action-group">
+              <label>Start Date</label>
+              <input type="date" id="deployStart" style="width:100%;background:var(--navy-light);border:1px solid rgba(255,255,255,0.1);color:var(--white);padding:0.75rem 0.9rem;font-family:'Barlow',sans-serif;font-size:0.88rem;outline:none;">
+            </div>
+          </div>
+
+          <!-- Rejection section -->
+          <div id="rejectionSection" style="display:none">
+            <div style="font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--red);font-weight:700;padding:0.6rem 0 0.5rem;border-top:1px solid rgba(192,21,15,0.15);margin-bottom:0.75rem;margin-top:0.5rem">&#10005; Rejection Details</div>
+            <div class="action-group">
+              <label>Reason (visible to applicant)</label>
+              <textarea id="rejectionReason" placeholder="Optional: explain why the application was not selected…"></textarea>
+            </div>
+          </div>
+
+          <button class="btn-save" id="saveBtn" onclick="saveUpdate()">Save Changes</button>
+          <div class="alert alert-error"   id="saveError"></div>
+          <div class="alert alert-success" id="saveSuccess"></div>
+          <div class="meta-info" id="metaInfo"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../supabase-config.js"></script>
+<script>
+let currentApp = null;
+let currentUserId = null;
+
+async function signOut() { await sb.auth.signOut(); window.location.href = 'login.html'; }
+
+const REQ_LABELS = {
+  sss:'SSS', philhealth:'PhilHealth', pagibig:'Pag-IBIG', tin:'TIN',
+  police_clearance:'Police Clearance', nbi_clearance:'NBI Clearance',
+  birth_certificate:'Birth Certificate', medical_cert:'Medical Certificate'
+};
+
+function val(v) { return v || '—'; }
+function fmtDate(d) { return d ? new Date(d).toLocaleDateString('en-PH', { year:'numeric', month:'long', day:'numeric' }) : '—'; }
+
+function renderStatusBadge(status) {
+  const badge = document.getElementById('statusBadge');
+  const text  = document.getElementById('statusText');
+  badge.className = 'status-badge status-' + status;
+  const labels = { pending:'Pending Review', reviewing:'Under Review', approved:'Approved', hired:'Hired', rejected:'Rejected' };
+  text.textContent = labels[status] || status;
+}
+
+function onStatusChange() {
+  const s = document.getElementById('statusSelect').value;
+  document.getElementById('interviewSection').style.display  = ['reviewing','approved','hired'].includes(s) ? 'block' : 'none';
+  document.getElementById('deploymentSection').style.display = s === 'hired' ? 'block' : 'none';
+  document.getElementById('rejectionSection').style.display  = s === 'rejected' ? 'block' : 'none';
+}
+
+async function saveUpdate() {
+  const newStatus  = document.getElementById('statusSelect').value;
+  const notes      = document.getElementById('notesInput').value.trim();
+  const intDate    = document.getElementById('interviewDate').value || null;
+  const intLoc     = document.getElementById('interviewLocation').value.trim() || null;
+  const depClient  = document.getElementById('deployClient').value.trim() || null;
+  const depSite    = document.getElementById('deploySite').value.trim() || null;
+  const depStart   = document.getElementById('deployStart').value || null;
+  const rejReason  = document.getElementById('rejectionReason').value.trim() || null;
+  const btn        = document.getElementById('saveBtn');
+  const errEl      = document.getElementById('saveError');
+  const okEl       = document.getElementById('saveSuccess');
+  errEl.classList.remove('show'); okEl.classList.remove('show');
+  btn.disabled = true; btn.textContent = 'Saving…';
+
+  const { error } = await sb.from('yz_applications').update({
+    status:             newStatus,
+    notes:              notes || null,
+    interview_date:     intDate,
+    interview_location: intLoc,
+    deployment_client:  depClient,
+    deployment_site:    depSite,
+    deployment_start:   depStart,
+    rejection_reason:   rejReason,
+    reviewed_by:        currentUserId,
+    reviewed_at:        new Date().toISOString()
+  }).eq('id', currentApp.id);
+
+  btn.disabled = false; btn.textContent = 'Save Changes';
+  if (error) { errEl.textContent = error.message; errEl.classList.add('show'); return; }
+
+  okEl.textContent = 'Application updated successfully.'; okEl.classList.add('show');
+  currentApp.status = newStatus;
+  renderStatusBadge(newStatus);
+  document.getElementById('dUpdated').textContent    = fmtDate(new Date().toISOString());
+  document.getElementById('dReviewedAt').textContent = fmtDate(new Date().toISOString());
+
+  // Best-effort email notification
+  try {
+    await sb.functions.invoke('yz-notify', {
+      body: { to:currentApp.email, name:currentApp.full_name, status:newStatus, position:currentApp.position_applied, notes, interview_date:intDate, interview_location:intLoc, deployment_client:depClient, deployment_site:depSite, deployment_start:depStart, rejection_reason:rejReason }
+    });
+  } catch(e) { /* email optional */ }
+}
+
+(async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { window.location.href = 'login.html'; return; }
+  currentUserId = session.user.id;
+
+  const { data: profile } = await sb.from('yz_profiles').select('role,full_name,email').eq('id', session.user.id).single();
+  if (!profile || !['admin','hr'].includes(profile.role)) {
+    window.location.href = '../applicant-dashboard.html'; return;
+  }
+  document.getElementById('sidebarUser').textContent = profile.full_name || profile.email;
+
+  const id = new URLSearchParams(window.location.search).get('id');
+  if (!id) { window.location.href = 'applications.html'; return; }
+
+  const { data: app, error } = await sb.from('yz_applications').select('*').eq('id', id).single();
+  if (error || !app) { window.location.href = 'applications.html'; return; }
+
+  currentApp = app;
+
+  document.getElementById('loadingMsg').style.display = 'none';
+  document.getElementById('pageContent').style.display = 'block';
+
+  document.getElementById('hName').textContent     = app.full_name || '—';
+  document.getElementById('hPosition').textContent = app.position_applied;
+  renderStatusBadge(app.status);
+
+  document.getElementById('dName').textContent    = val(app.full_name);
+  document.getElementById('dEmail').textContent   = val(app.email);
+  document.getElementById('dPhone').textContent   = val(app.phone);
+  document.getElementById('dDob').textContent     = app.date_of_birth ? fmtDate(app.date_of_birth + 'T00:00:00') : '—';
+  document.getElementById('dGender').textContent  = val(app.gender);
+  document.getElementById('dCivil').textContent   = val(app.civil_status);
+  document.getElementById('dAddress').textContent = val(app.address);
+  document.getElementById('dEdu').textContent     = val(app.education);
+  document.getElementById('dCreated').textContent = fmtDate(app.created_at);
+  document.getElementById('dUpdated').textContent = fmtDate(app.updated_at);
+
+  if (app.resume_url) {
+    const { data: { publicUrl } } = sb.storage.from('yz-resumes').getPublicUrl(app.resume_url);
+    document.getElementById('dResume').innerHTML = `<a href="${publicUrl}" target="_blank" style="color:var(--red)">Download Resume</a>`;
+  }
+
+  // Gov requirements
+  const reqs = app.gov_requirements || {};
+  const tagsCont = document.getElementById('reqTags');
+  Object.entries(REQ_LABELS).forEach(([k, label]) => {
+    const tag = document.createElement('span');
+    tag.className = 'req-tag ' + (reqs[k] ? 'req-have' : 'req-lacks');
+    tag.textContent = (reqs[k] ? '✓ ' : '✗ ') + label;
+    tagsCont.appendChild(tag);
+  });
+
+  // Reviewed by
+  if (app.reviewed_by) {
+    const { data: reviewer } = await sb.from('yz_profiles').select('full_name,email').eq('id', app.reviewed_by).single();
+    document.getElementById('dReviewedBy').textContent = reviewer ? (reviewer.full_name || reviewer.email) : val(null);
+    document.getElementById('dReviewedAt').textContent = fmtDate(app.reviewed_at);
+  }
+
+  // Pre-fill action panel
+  document.getElementById('statusSelect').value = app.status;
+  if (app.notes) document.getElementById('notesInput').value = app.notes;
+  if (app.interview_date)     document.getElementById('interviewDate').value     = app.interview_date.slice(0,16);
+  if (app.interview_location) document.getElementById('interviewLocation').value = app.interview_location;
+  if (app.deployment_client)  document.getElementById('deployClient').value      = app.deployment_client;
+  if (app.deployment_site)    document.getElementById('deploySite').value        = app.deployment_site;
+  if (app.deployment_start)   document.getElementById('deployStart').value       = app.deployment_start;
+  if (app.rejection_reason)   document.getElementById('rejectionReason').value   = app.rejection_reason;
+  onStatusChange();
+})();
+</script>
+</body>
+</html>

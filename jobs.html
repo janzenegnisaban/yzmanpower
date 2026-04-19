@@ -216,7 +216,7 @@
 
 <div class="fabs">
   <a href="https://m.me/61558956456076" target="_blank" rel="noopener noreferrer" class="fab fab-msn">&#128172; Messenger</a>
-  <a href="jobs.html#jobs" class="fab fab-jobs">&#128196; Apply Now</a>
+  <a href="apply.html" class="fab fab-jobs">&#128196; Apply Now</a>
 </div>
 
 <div class="modal-overlay" id="modalOverlay" onclick="overlayClick(event)">
@@ -383,6 +383,8 @@ let curStep = 1;
 const TOTAL = 3;
 
 function openModal(title, cat) {
+  window.location.href = 'apply.html?position=' + encodeURIComponent(title);
+  return;
   document.getElementById('modalTitle').textContent = title;
   document.getElementById('modalCat').textContent = cat + '  |  YZ Manpower Services';
   document.getElementById('f_pos').value = title;

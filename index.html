@@ -26,6 +26,7 @@
     <li class="nav-jobs-link"><a href="jobs.html">Job Openings</a></li>
     <li><a href="requirements.html">Requirements</a></li>
     <li><a href="contact.html">Contact</a></li>
+    <li id="navAuthItem"></li>
   </ul>
   <div class="nav-ham" id="hamburger" onclick="toggleNav()">
     <span></span><span></span><span></span>
@@ -161,6 +162,62 @@ function updateNavActive() {
 }
 window.addEventListener('scroll', updateNavActive);
 window.addEventListener('load', updateNavActive);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+function toggleUserMenu() {
+  document.getElementById('navUserMenu').classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('navUserMenu');
+  if (menu && !menu.contains(e.target)) menu.classList.remove('open');
+});
+
+async function signOutNav() {
+  await sb.auth.signOut();
+  window.location.reload();
+}
+
+(async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  const item = document.getElementById('navAuthItem');
+  if (!item) return;
+
+  if (!session) {
+    item.innerHTML = '<a href="login.html" class="nav-cta">Sign In</a>';
+    return;
+  }
+
+  const { data: profile } = await sb
+    .from('yz_profiles')
+    .select('full_name, role')
+    .eq('id', session.user.id)
+    .single();
+
+  const name      = profile?.full_name || session.user.email.split('@')[0];
+  const firstName = name.split(' ')[0];
+  const initials  = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  const isStaff   = profile?.role === 'admin' || profile?.role === 'hr';
+  const dashboard = isStaff ? 'admin/index.html' : 'applicant-dashboard.html';
+
+  item.className = 'nav-user-menu';
+  item.id = 'navUserMenu';
+  item.innerHTML = `
+    <button class="nav-user-btn" onclick="toggleUserMenu()">
+      <span class="nav-user-avatar">${initials}</span>
+      <span class="nav-user-name">${firstName}</span>
+      <span class="nav-user-caret">▾</span>
+    </button>
+    <div class="nav-user-dropdown">
+      <a href="${dashboard}">&#128196; My Dashboard</a>
+      <a href="account-settings.html">&#9881; Account Settings</a>
+      <div class="drop-divider"></div>
+      <button class="drop-signout" onclick="signOutNav()">&#8594; Sign Out</button>
+    </div>
+  `;
+})();
 </script>
 </body>
 </html>

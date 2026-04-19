@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — YZ Manpower</title>
+<link rel="icon" href="../Untitled%20design.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body { display: flex; min-height: 100vh; }
+/* Sidebar */
+.admin-sidebar { width: 230px; min-width: 230px; background: var(--navy-mid); border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; padding: 1.5rem 0; position: fixed; top: 0; left: 0; height: 100vh; z-index: 100; }
+.sidebar-logo { display: flex; align-items: center; gap: 0.75rem; padding: 0 1.5rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 1.5rem; }
+.sidebar-logo-mark { width: 38px; height: 38px; background: var(--red); clip-path: polygon(0 0,100% 0,100% 75%,75% 100%,0 100%); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue',sans-serif; font-size: 1rem; color: #fff; flex-shrink: 0; }
+.sidebar-brand { font-family: 'Barlow Condensed',sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.3; }
+.sidebar-brand span { color: var(--red); }
+.sidebar-brand small { display: block; font-size: 0.62rem; color: var(--gray); letter-spacing: 0.08em; font-weight: 400; text-transform: uppercase; margin-top: 0.1rem; }
+.sidebar-nav { flex: 1; }
+.sidebar-nav a { display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 1.5rem; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); text-decoration: none; transition: all 0.2s; border-left: 3px solid transparent; }
+.sidebar-nav a:hover, .sidebar-nav a.active { color: var(--white); background: rgba(255,255,255,0.04); border-left-color: var(--red); }
+.sidebar-nav a .nav-icon { font-size: 1rem; }
+.sidebar-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 0.75rem 0; }
+.sidebar-bottom { padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); }
+.sidebar-user { font-size: 0.75rem; color: var(--gray); margin-bottom: 0.75rem; }
+.sidebar-user strong { display: block; color: var(--light); font-weight: 600; font-size: 0.8rem; }
+.sidebar-signout { width: 100%; background: transparent; border: 1px solid rgba(255,255,255,0.1); color: var(--gray); padding: 0.5rem; font-family: 'Barlow',sans-serif; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+.sidebar-signout:hover { border-color: var(--red); color: var(--white); }
+/* Main */
+.admin-main { margin-left: 230px; flex: 1; padding: 2.5rem; min-height: 100vh; background: var(--navy); }
+.admin-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem; }
+.admin-topbar h1 { font-family: 'Bebas Neue',sans-serif; font-size: 2rem; letter-spacing: 0.02em; }
+.admin-topbar .sub { font-size: 0.82rem; color: var(--gray); margin-top: 0.2rem; }
+/* Stat cards */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-bottom: 2.5rem; }
+.stat-card { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.07); border-top: 3px solid var(--red); padding: 1.5rem; }
+.stat-card-num { font-family: 'Bebas Neue',sans-serif; font-size: 2.8rem; line-height: 1; color: var(--red); }
+.stat-card-label { font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); margin-top: 0.3rem; }
+.stat-card.blue { border-top-color: #63b3ed; } .stat-card.blue .stat-card-num { color: #63b3ed; }
+.stat-card.green { border-top-color: #4ade80; } .stat-card.green .stat-card-num { color: #4ade80; }
+.stat-card.yellow { border-top-color: #fbbf24; } .stat-card.yellow .stat-card-num { color: #fbbf24; }
+/* Recent table */
+.section-card { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.07); padding: 1.75rem; }
+.section-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.75rem; }
+.section-card-title { font-family: 'Barlow Condensed',sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+th { text-align: left; font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); padding: 0 0.75rem 0.75rem; font-weight: 600; white-space: nowrap; }
+td { padding: 0.85rem 0.75rem; border-top: 1px solid rgba(255,255,255,0.05); color: var(--light); }
+tr:hover td { background: rgba(255,255,255,0.02); }
+.status-pill { display: inline-block; padding: 0.2rem 0.65rem; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.pill-pending  { background: rgba(251,191,36,0.12); color: #fbbf24; }
+.pill-reviewing { background: rgba(99,179,237,0.12); color: #63b3ed; }
+.pill-approved { background: rgba(74,222,128,0.1); color: #4ade80; }
+.pill-hired    { background: rgba(192,21,15,0.12); color: #ff7b7b; }
+.pill-rejected { background: rgba(100,100,100,0.1); color: var(--gray); }
+.btn-view { font-size: 0.72rem; color: var(--red); text-decoration: none; letter-spacing: 0.08em; border: 1px solid rgba(192,21,15,0.3); padding: 0.25rem 0.65rem; transition: all 0.2s; }
+.btn-view:hover { background: rgba(192,21,15,0.1); }
+.empty-row { text-align: center; color: var(--gray); padding: 2rem; font-size: 0.85rem; }
+@media (max-width: 1024px) { .stats-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 768px) {
+  .admin-sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+  .admin-sidebar.open { transform: translateX(0); }
+  .admin-main { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="admin-sidebar" id="adminSidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-mark">YZ</div>
+    <div class="sidebar-brand"><span>YZ</span> Manpower<small>Admin Panel</small></div>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="index.html" class="active"><span class="nav-icon">&#9632;</span> Dashboard</a>
+    <a href="applications.html"><span class="nav-icon">&#128196;</span> Applications</a>
+    <a href="pipeline.html"><span class="nav-icon">&#128202;</span> Pipeline</a>
+    <div class="sidebar-divider"></div>
+    <a href="accounts.html"><span class="nav-icon">&#128100;</span> HR Accounts</a>
+    <div class="sidebar-divider"></div>
+    <a href="../index.html"><span class="nav-icon">&#8592;</span> Back to Site</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="sidebar-user">Signed in as<strong id="sidebarUser">—</strong></div>
+    <button class="sidebar-signout" onclick="signOut()">Sign Out</button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="admin-main">
+  <div class="admin-topbar">
+    <div>
+      <h1>Dashboard</h1>
+      <div class="sub">Overview of all applicants and activity</div>
+    </div>
+    <a href="applications.html" class="btn-primary" style="font-size:0.78rem;">View All Applications</a>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card yellow">
+      <div class="stat-card-num" id="statPending">—</div>
+      <div class="stat-card-label">Pending Review</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="stat-card-num" id="statReviewing">—</div>
+      <div class="stat-card-label">Under Review</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-card-num" id="statApproved">—</div>
+      <div class="stat-card-label">Approved</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-num" id="statTotal">—</div>
+      <div class="stat-card-label">Total Applications</div>
+    </div>
+  </div>
+
+  <!-- Status Breakdown Chart -->
+  <div class="section-card" style="margin-bottom:1.5rem">
+    <div class="section-card-header">
+      <div class="section-card-title">Status Breakdown</div>
+    </div>
+    <div id="statusChart" style="padding:0.25rem 0"></div>
+  </div>
+
+  <!-- Recent applications table -->
+  <div class="section-card">
+    <div class="section-card-header">
+      <div class="section-card-title">Recent Applications</div>
+      <a href="applications.html" class="btn-view">View All</a>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Applicant</th>
+            <th>Position</th>
+            <th>Date Applied</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="recentTable">
+          <tr><td colspan="5" class="empty-row">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../supabase-config.js"></script>
+<script>
+async function signOut() { await sb.auth.signOut(); window.location.href = 'login.html'; }
+
+function pillClass(s) {
+  return { pending:'pill-pending', reviewing:'pill-reviewing', approved:'pill-approved', hired:'pill-hired', rejected:'pill-rejected' }[s] || '';
+}
+function pillLabel(s) {
+  return { pending:'Pending', reviewing:'Reviewing', approved:'Approved', hired:'Hired', rejected:'Rejected' }[s] || s;
+}
+
+(async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { window.location.href = 'login.html'; return; }
+
+  const { data: profile } = await sb.from('yz_profiles').select('role,full_name,email').eq('id', session.user.id).single();
+  if (!profile || !['admin','hr'].includes(profile.role)) {
+    window.location.href = '../applicant-dashboard.html'; return;
+  }
+
+  document.getElementById('sidebarUser').textContent = profile.full_name || profile.email;
+
+  // Stats
+  const { data: apps } = await sb.from('yz_applications').select('id, status');
+  if (apps) {
+    const counts = { pending:0, reviewing:0, approved:0, hired:0, rejected:0 };
+    apps.forEach(a => { if (counts[a.status] !== undefined) counts[a.status]++; });
+    document.getElementById('statTotal').textContent     = apps.length;
+    document.getElementById('statPending').textContent   = counts.pending;
+    document.getElementById('statReviewing').textContent = counts.reviewing;
+    document.getElementById('statApproved').textContent  = counts.approved;
+    // Chart
+    const total = apps.length || 1;
+    const bars = [
+      { label:'Pending',   key:'pending',   color:'#fbbf24' },
+      { label:'Reviewing', key:'reviewing', color:'#63b3ed' },
+      { label:'Approved',  key:'approved',  color:'#4ade80' },
+      { label:'Hired',     key:'hired',     color:'#ff7b7b' },
+      { label:'Rejected',  key:'rejected',  color:'rgba(168,168,164,0.6)' }
+    ];
+    document.getElementById('statusChart').innerHTML = bars.map(b => `
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;">
+        <div style="width:78px;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);text-align:right;flex-shrink:0">${b.label}</div>
+        <div style="flex:1;height:20px;background:rgba(255,255,255,0.04);position:relative;">
+          <div style="height:100%;width:${(counts[b.key]/total*100).toFixed(1)}%;background:${b.color};opacity:0.75;transition:width 0.7s ease;"></div>
+          <span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:0.7rem;font-weight:600;color:var(--white);pointer-events:none">${counts[b.key]}</span>
+        </div>
+        <div style="width:32px;font-size:0.7rem;color:var(--gray);flex-shrink:0">${(counts[b.key]/total*100).toFixed(0)}%</div>
+      </div>
+    `).join('');
+  }
+
+  // Recent 10
+  const { data: recent } = await sb
+    .from('yz_applications')
+    .select('id, full_name, email, position_applied, status, created_at')
+    .order('created_at', { ascending: false })
+    .limit(10);
+
+  const tbody = document.getElementById('recentTable');
+  if (!recent || !recent.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty-row">No applications yet.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = recent.map(a => `
+    <tr>
+      <td><strong>${a.full_name || '—'}</strong><br><small style="color:var(--gray);font-size:0.75rem">${a.email}</small></td>
+      <td>${a.position_applied}</td>
+      <td>${new Date(a.created_at).toLocaleDateString('en-PH', { month:'short', day:'numeric', year:'numeric' })}</td>
+      <td><span class="status-pill ${pillClass(a.status)}">${pillLabel(a.status)}</span></td>
+      <td><a href="applicant-detail.html?id=${a.id}" class="btn-view">View</a></td>
+    </tr>
+  `).join('');
+})();
+</script>
+</body>
+</html>

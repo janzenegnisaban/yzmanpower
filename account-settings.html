@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account Settings — YZ Manpower Services</title>
+<link rel="icon" href="Untitled%20design.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.settings-page { padding: 5.5rem 1.5rem 4rem; min-height: 100vh; }
+.settings-wrap { max-width: 740px; margin: 0 auto; }
+/* Page header */
+.settings-header { margin-bottom: 2.5rem; }
+.settings-header h1 { font-family: 'Bebas Neue',sans-serif; font-size: clamp(2rem,3.5vw,2.8rem); letter-spacing: 0.02em; line-height: 1; }
+.settings-header p { font-size: 0.86rem; color: var(--gray); margin-top: 0.4rem; }
+/* Section card */
+.settings-card { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.07); padding: 2rem; margin-bottom: 1.5rem; }
+.settings-card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.75rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.settings-card-icon { width: 36px; height: 36px; background: rgba(192,21,15,0.12); border: 1px solid rgba(192,21,15,0.2); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.settings-card-title { font-family: 'Barlow Condensed',sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white); }
+.settings-card-sub { font-size: 0.75rem; color: var(--gray); margin-top: 0.15rem; }
+/* Avatar area */
+.avatar-row { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
+.avatar-circle { width: 72px; height: 72px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue',sans-serif; font-size: 1.8rem; color: #fff; flex-shrink: 0; letter-spacing: 0.04em; }
+.avatar-info strong { display: block; font-size: 0.9rem; margin-bottom: 0.2rem; }
+.avatar-info span { font-size: 0.78rem; color: var(--gray); }
+.role-tag { display: inline-block; padding: 0.15rem 0.55rem; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-left: 0.5rem; }
+.role-admin { background: rgba(192,21,15,0.12); color: #ff7b7b; }
+.role-hr { background: rgba(99,179,237,0.12); color: #63b3ed; }
+.role-applicant { background: rgba(74,222,128,0.08); color: #4ade80; }
+/* Form */
+.form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.form-field { display: flex; flex-direction: column; margin-bottom: 0; }
+.form-field.full { grid-column: 1 / -1; }
+.form-field label { font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); font-weight: 600; margin-bottom: 0.45rem; }
+.form-field input { background: var(--navy-light); border: 1px solid rgba(255,255,255,0.1); color: var(--white); padding: 0.8rem 1rem; font-family: 'Barlow',sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+.form-field input:focus { border-color: var(--red); }
+.form-field input:disabled { opacity: 0.45; cursor: not-allowed; }
+.form-field input::placeholder { color: rgba(168,168,164,0.5); }
+.form-hint { font-size: 0.72rem; color: var(--gray); margin-top: 0.35rem; opacity: 0.8; }
+/* Alert */
+.alert { padding: 0.75rem 1rem; font-size: 0.82rem; display: none; line-height: 1.5; margin-top: 1.25rem; }
+.alert.show { display: block; }
+.alert-error   { background: rgba(192,21,15,0.1); border: 1px solid rgba(192,21,15,0.35); color: #ff7b7b; }
+.alert-success { background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.25); color: #4ade80; }
+/* Actions */
+.form-actions { display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.btn-save { background: var(--red); color: #fff; padding: 0.82rem 2rem; font-family: 'Barlow',sans-serif; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; border: none; cursor: pointer; transition: background 0.2s; }
+.btn-save:hover { background: var(--red-dark); }
+.btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-cancel-lnk { font-size: 0.8rem; color: var(--gray); text-decoration: none; letter-spacing: 0.08em; cursor: pointer; background: none; border: none; font-family: 'Barlow',sans-serif; }
+.btn-cancel-lnk:hover { color: var(--white); }
+/* Info rows */
+.info-row { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.info-row:last-child { border-bottom: none; }
+.info-row-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); }
+.info-row-value { font-size: 0.88rem; color: var(--light); }
+/* Danger zone */
+.danger-card { background: rgba(192,21,15,0.04); border: 1px solid rgba(192,21,15,0.18); padding: 1.75rem 2rem; margin-bottom: 1.5rem; }
+.danger-card-title { font-family: 'Barlow Condensed',sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(192,21,15,0.7); margin-bottom: 1rem; }
+.danger-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.danger-info strong { display: block; font-size: 0.88rem; margin-bottom: 0.2rem; }
+.danger-info p { font-size: 0.78rem; color: var(--gray); line-height: 1.5; }
+.btn-danger { background: transparent; border: 1px solid rgba(192,21,15,0.4); color: rgba(192,21,15,0.8); padding: 0.6rem 1.25rem; font-family: 'Barlow',sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+.btn-danger:hover { background: rgba(192,21,15,0.1); color: #ff7b7b; border-color: rgba(192,21,15,0.6); }
+/* Password strength */
+.pw-strength { height: 3px; background: rgba(255,255,255,0.08); margin-top: 0.5rem; border-radius: 2px; overflow: hidden; }
+.pw-strength-bar { height: 100%; width: 0; transition: width 0.3s, background 0.3s; border-radius: 2px; }
+/* Loading skeleton */
+.loading-overlay { display: none; }
+.loading-overlay.show { display: flex; align-items: center; justify-content: center; min-height: 200px; color: var(--gray); font-size: 0.88rem; }
+@media (max-width: 560px) {
+  .form-grid-2 { grid-template-columns: 1fr; }
+  .settings-card { padding: 1.5rem 1.25rem; }
+  .avatar-row { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Main">
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-mark">YZ</div>
+    <div class="nav-brand"><span>YZ</span> Manpower</div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="jobs.html">Job Openings</a></li>
+    <li><a href="requirements.html">Requirements</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li id="navAuthItem"></li>
+  </ul>
+  <div class="nav-ham" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="settings-page">
+  <div class="settings-wrap">
+
+    <div class="settings-header">
+      <div class="section-label"><span>My Account</span></div>
+      <h1>Account <span style="color:var(--red)">Settings</span></h1>
+      <p>Manage your profile information and account security.</p>
+    </div>
+
+    <!-- ── PROFILE CARD ── -->
+    <div class="settings-card" id="profileCard">
+      <div class="settings-card-header">
+        <div class="settings-card-icon">&#128100;</div>
+        <div>
+          <div class="settings-card-title">Profile Information</div>
+          <div class="settings-card-sub">Update your name and contact number</div>
+        </div>
+      </div>
+
+      <!-- Avatar + name display -->
+      <div class="avatar-row">
+        <div class="avatar-circle" id="avatarCircle">??</div>
+        <div class="avatar-info">
+          <strong id="displayName">Loading…</strong>
+          <span id="displayEmail"></span>
+          <span class="role-tag" id="displayRole"></span>
+        </div>
+      </div>
+
+      <form id="profileForm" onsubmit="saveProfile(event)" novalidate>
+        <div class="form-grid-2">
+          <div class="form-field">
+            <label for="pFullName">Full Name</label>
+            <input type="text" id="pFullName" placeholder="Juan dela Cruz" required autocomplete="name">
+          </div>
+          <div class="form-field">
+            <label for="pPhone">Mobile Number</label>
+            <input type="tel" id="pPhone" placeholder="09XX-XXX-XXXX" autocomplete="tel">
+          </div>
+          <div class="form-field full">
+            <label for="pEmail">Email Address</label>
+            <input type="email" id="pEmail" disabled>
+            <p class="form-hint">Email cannot be changed. Contact support if needed.</p>
+          </div>
+        </div>
+        <div class="alert alert-error"   id="profileErr"></div>
+        <div class="alert alert-success" id="profileOk"></div>
+        <div class="form-actions">
+          <button type="submit" class="btn-save" id="profileSaveBtn">Save Changes</button>
+          <button type="button" class="btn-cancel-lnk" onclick="resetProfileForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ── SECURITY CARD ── -->
+    <div class="settings-card">
+      <div class="settings-card-header">
+        <div class="settings-card-icon">&#128274;</div>
+        <div>
+          <div class="settings-card-title">Change Password</div>
+          <div class="settings-card-sub">Set a new password for your account</div>
+        </div>
+      </div>
+
+      <form id="passwordForm" onsubmit="savePassword(event)" novalidate>
+        <div class="form-grid-2">
+          <div class="form-field">
+            <label for="newPassword">New Password</label>
+            <input type="password" id="newPassword" placeholder="At least 8 characters" autocomplete="new-password" oninput="checkPasswordStrength(this.value)">
+            <div class="pw-strength"><div class="pw-strength-bar" id="pwBar"></div></div>
+          </div>
+          <div class="form-field">
+            <label for="confirmPassword">Confirm New Password</label>
+            <input type="password" id="confirmPassword" placeholder="Repeat new password" autocomplete="new-password">
+          </div>
+        </div>
+        <div class="alert alert-error"   id="passwordErr"></div>
+        <div class="alert alert-success" id="passwordOk"></div>
+        <div class="form-actions">
+          <button type="submit" class="btn-save" id="passwordSaveBtn">Update Password</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ── ACCOUNT INFO CARD ── -->
+    <div class="settings-card">
+      <div class="settings-card-header">
+        <div class="settings-card-icon">&#8505;</div>
+        <div>
+          <div class="settings-card-title">Account Information</div>
+          <div class="settings-card-sub">Read-only details about your account</div>
+        </div>
+      </div>
+      <div>
+        <div class="info-row">
+          <span class="info-row-label">Account Type</span>
+          <span class="info-row-value" id="infoRole">—</span>
+        </div>
+        <div class="info-row">
+          <span class="info-row-label">Email</span>
+          <span class="info-row-value" id="infoEmail">—</span>
+        </div>
+        <div class="info-row">
+          <span class="info-row-label">Member Since</span>
+          <span class="info-row-value" id="infoJoined">—</span>
+        </div>
+        <div class="info-row" id="infoAppRow">
+          <span class="info-row-label">Application Status</span>
+          <span class="info-row-value" id="infoAppStatus">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── QUICK LINKS ── -->
+    <div class="settings-card">
+      <div class="settings-card-header">
+        <div class="settings-card-icon">&#128279;</div>
+        <div>
+          <div class="settings-card-title">Quick Links</div>
+          <div class="settings-card-sub">Jump to other sections</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+        <a href="applicant-dashboard.html" class="btn-ghost" style="font-size:0.78rem" id="quickDashboard">My Dashboard</a>
+        <a href="jobs.html" class="btn-ghost" style="font-size:0.78rem">Browse Jobs</a>
+        <a href="contact.html" class="btn-ghost" style="font-size:0.78rem">Contact HR</a>
+      </div>
+    </div>
+
+    <!-- ── DANGER ZONE ── -->
+    <div class="danger-card">
+      <div class="danger-card-title">Danger Zone</div>
+      <div class="danger-row">
+        <div class="danger-info">
+          <strong>Sign Out of All Devices</strong>
+          <p>This will sign you out from all active sessions on all devices.</p>
+        </div>
+        <button class="btn-danger" onclick="signOutAll()">Sign Out Everywhere</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+function toggleNav() {
+  const n = document.getElementById('navLinks');
+  if (n) n.classList.toggle('open');
+}
+function toggleUserMenu() {
+  document.getElementById('navUserMenu').classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('navUserMenu');
+  if (menu && !menu.contains(e.target)) menu.classList.remove('open');
+});
+
+/* Password strength meter */
+function checkPasswordStrength(val) {
+  const bar = document.getElementById('pwBar');
+  let score = 0;
+  if (val.length >= 8) score++;
+  if (/[A-Z]/.test(val)) score++;
+  if (/[0-9]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
+  const widths = ['0%','25%','50%','75%','100%'];
+  const colors = ['transparent','#ef4444','#fbbf24','#60a5fa','#4ade80'];
+  bar.style.width  = widths[score];
+  bar.style.background = colors[score];
+}
+
+function showAlert(id, msg, type) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.className = 'alert alert-' + type + ' show';
+}
+function clearAlert(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+let originalProfile = {};
+
+function resetProfileForm() {
+  document.getElementById('pFullName').value = originalProfile.full_name || '';
+  document.getElementById('pPhone').value    = originalProfile.phone || '';
+  clearAlert('profileErr'); clearAlert('profileOk');
+}
+
+async function saveProfile(e) {
+  e.preventDefault();
+  clearAlert('profileErr'); clearAlert('profileOk');
+
+  const fullName = document.getElementById('pFullName').value.trim();
+  const phone    = document.getElementById('pPhone').value.trim();
+
+  if (!fullName) { showAlert('profileErr', 'Full name is required.', 'error'); return; }
+
+  const btn = document.getElementById('profileSaveBtn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+
+  const { data: { user } } = await sb.auth.getUser();
+
+  const [profileRes, metaRes] = await Promise.all([
+    sb.from('yz_profiles').update({ full_name: fullName, phone: phone || null }).eq('id', user.id),
+    sb.auth.updateUser({ data: { full_name: fullName, phone: phone || null } })
+  ]);
+
+  btn.disabled = false; btn.textContent = 'Save Changes';
+
+  if (profileRes.error) { showAlert('profileErr', profileRes.error.message, 'error'); return; }
+
+  originalProfile.full_name = fullName;
+  originalProfile.phone     = phone;
+
+  // Update UI immediately
+  const initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  document.getElementById('avatarCircle').textContent = initials;
+  document.getElementById('displayName').textContent  = fullName;
+  updateNavUserName(fullName);
+
+  showAlert('profileOk', 'Profile updated successfully.', 'success');
+}
+
+async function savePassword(e) {
+  e.preventDefault();
+  clearAlert('passwordErr'); clearAlert('passwordOk');
+
+  const pw  = document.getElementById('newPassword').value;
+  const cpw = document.getElementById('confirmPassword').value;
+
+  if (!pw)          { showAlert('passwordErr', 'Please enter a new password.', 'error'); return; }
+  if (pw.length < 8){ showAlert('passwordErr', 'Password must be at least 8 characters.', 'error'); return; }
+  if (pw !== cpw)   { showAlert('passwordErr', 'Passwords do not match.', 'error'); return; }
+
+  const btn = document.getElementById('passwordSaveBtn');
+  btn.disabled = true; btn.textContent = 'Updating…';
+
+  const { error } = await sb.auth.updateUser({ password: pw });
+
+  btn.disabled = false; btn.textContent = 'Update Password';
+
+  if (error) { showAlert('passwordErr', error.message, 'error'); return; }
+
+  showAlert('passwordOk', 'Password updated successfully.', 'success');
+  document.getElementById('newPassword').value    = '';
+  document.getElementById('confirmPassword').value = '';
+  document.getElementById('pwBar').style.width = '0';
+}
+
+async function signOutAll() {
+  if (!confirm('Sign out from all devices?')) return;
+  await sb.auth.signOut({ scope: 'global' });
+  window.location.href = 'login.html';
+}
+
+function updateNavUserName(fullName) {
+  const nameEl = document.querySelector('.nav-user-name');
+  if (nameEl) nameEl.textContent = fullName.split(' ')[0];
+  const avatarEl = document.querySelector('.nav-user-avatar');
+  if (avatarEl) avatarEl.textContent = fullName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+}
+
+const APP_STATUS_LABELS = {
+  pending:'Pending Review', reviewing:'Under Review',
+  approved:'Approved', hired:'Hired', rejected:'Rejected'
+};
+
+(async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { window.location.href = 'login.html?redirect=account-settings.html'; return; }
+
+  const userId = session.user.id;
+
+  const [profileRes, appRes] = await Promise.all([
+    sb.from('yz_profiles').select('*').eq('id', userId).single(),
+    sb.from('yz_applications').select('status').eq('applicant_id', userId).limit(1).single()
+  ]);
+
+  const profile = profileRes.data;
+  const app     = appRes.data;
+
+  if (!profile) { window.location.href = 'login.html'; return; }
+
+  originalProfile = { full_name: profile.full_name, phone: profile.phone };
+
+  // Populate avatar
+  const fullName = profile.full_name || session.user.email.split('@')[0];
+  const initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  document.getElementById('avatarCircle').textContent = initials;
+  document.getElementById('displayName').textContent  = fullName;
+  document.getElementById('displayEmail').textContent = profile.email;
+
+  const roleTag = document.getElementById('displayRole');
+  roleTag.textContent = { admin:'Admin', hr:'HR', applicant:'Applicant' }[profile.role] || profile.role;
+  roleTag.className = 'role-tag role-' + profile.role;
+
+  // Profile form
+  document.getElementById('pFullName').value = profile.full_name || '';
+  document.getElementById('pPhone').value    = profile.phone || '';
+  document.getElementById('pEmail').value    = profile.email || session.user.email;
+
+  // Account info
+  const roleLabels = { admin:'Administrator', hr:'HR Staff', applicant:'Applicant' };
+  document.getElementById('infoRole').textContent   = roleLabels[profile.role] || profile.role;
+  document.getElementById('infoEmail').textContent  = profile.email;
+  document.getElementById('infoJoined').textContent = new Date(profile.created_at).toLocaleDateString('en-PH', { year:'numeric', month:'long', day:'numeric' });
+
+  if (app) {
+    document.getElementById('infoAppStatus').innerHTML =
+      `<a href="applicant-dashboard.html" style="color:var(--red);text-decoration:none;">${APP_STATUS_LABELS[app.status] || app.status}</a>`;
+  } else {
+    document.getElementById('infoAppRow').style.display = 'none';
+  }
+
+  // Quick links — point admin/hr to admin dashboard
+  const isStaff = profile.role === 'admin' || profile.role === 'hr';
+  if (isStaff) {
+    document.getElementById('quickDashboard').href = 'admin/index.html';
+    document.getElementById('quickDashboard').textContent = 'Admin Dashboard';
+  }
+
+  // Nav user menu
+  const navItem = document.getElementById('navAuthItem');
+  if (navItem) {
+    const firstName = fullName.split(' ')[0];
+    const dashboard = isStaff ? 'admin/index.html' : 'applicant-dashboard.html';
+    navItem.className = 'nav-user-menu';
+    navItem.id = 'navUserMenu';
+    navItem.innerHTML = `
+      <button class="nav-user-btn" onclick="toggleUserMenu()">
+        <span class="nav-user-avatar">${initials}</span>
+        <span class="nav-user-name">${firstName}</span>
+        <span class="nav-user-caret">▾</span>
+      </button>
+      <div class="nav-user-dropdown">
+        <a href="${dashboard}">&#128196; My Dashboard</a>
+        <a href="account-settings.html" style="color:var(--white)!important">&#9881; Account Settings</a>
+        <div class="drop-divider"></div>
+        <button class="drop-signout" onclick="(async()=>{await sb.auth.signOut();window.location.href='login.html';})()">&#8594; Sign Out</button>
+      </div>
+    `;
+  }
+})();
+</script>
+</body>
+</html>
