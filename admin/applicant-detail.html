@@ -97,6 +97,7 @@ body { display: flex; min-height: 100vh; }
 <main class="admin-main" id="mainContent">
   <a href="applications.html" class="back-link">&#8592; Back to Applications</a>
   <div id="loadingMsg" style="color:var(--gray);font-size:0.9rem">Loading applicant data…</div>
+  <div id="errorMsg" style="display:none;background:rgba(192,21,15,0.1);border:1px solid rgba(192,21,15,0.35);color:#ff7b7b;padding:1rem 1.25rem;font-size:0.85rem;margin-top:1rem;"></div>
   <div id="pageContent" style="display:none">
 
     <div class="detail-header">
@@ -131,6 +132,11 @@ body { display: flex; min-height: 100vh; }
         <div class="section-card">
           <div class="section-card-title">Government Requirements</div>
           <div class="req-tags" id="reqTags"></div>
+        </div>
+
+        <div class="section-card" id="resumeCard" style="display:none">
+          <div class="section-card-title">Resume / CV</div>
+          <div id="resumePreviewArea"></div>
         </div>
 
         <div class="section-card">
@@ -291,11 +297,19 @@ async function saveUpdate() {
 }
 
 (async () => {
+  function showErr(msg) {
+    document.getElementById('loadingMsg').style.display = 'none';
+    const el = document.getElementById('errorMsg');
+    el.textContent = msg; el.style.display = 'block';
+  }
+
+  try {
   const { data: { session } } = await sb.auth.getSession();
   if (!session) { window.location.href = 'login.html'; return; }
   currentUserId = session.user.id;
 
-  const { data: profile } = await sb.from('yz_profiles').select('role,full_name,email').eq('id', session.user.id).single();
+  const { data: profile, error: pErr } = await sb.from('yz_profiles').select('role,full_name,email').eq('id', session.user.id).single();
+  if (pErr) { showErr('Could not load your profile: ' + pErr.message); return; }
   if (!profile || !['admin','hr'].includes(profile.role)) {
     window.location.href = '../applicant-dashboard.html'; return;
   }
@@ -305,7 +319,8 @@ async function saveUpdate() {
   if (!id) { window.location.href = 'applications.html'; return; }
 
   const { data: app, error } = await sb.from('yz_applications').select('*').eq('id', id).single();
-  if (error || !app) { window.location.href = 'applications.html'; return; }
+  if (error) { showErr('Could not load application: ' + error.message); return; }
+  if (!app) { showErr('Application not found.'); return; }
 
   currentApp = app;
 
@@ -329,7 +344,26 @@ async function saveUpdate() {
 
   if (app.resume_url) {
     const { data: { publicUrl } } = sb.storage.from('yz-resumes').getPublicUrl(app.resume_url);
-    document.getElementById('dResume').innerHTML = `<a href="${publicUrl}" target="_blank" style="color:var(--red)">Download Resume</a>`;
+    document.getElementById('dResume').innerHTML = `<a href="${publicUrl}" target="_blank" style="color:var(--red)">&#8595; Download</a>`;
+
+    const ext = app.resume_url.split('.').pop().toLowerCase();
+    document.getElementById('resumeCard').style.display = 'block';
+    const previewArea = document.getElementById('resumePreviewArea');
+
+    if (ext === 'pdf') {
+      previewArea.innerHTML = `
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.85rem;">
+          <span style="font-size:0.78rem;color:var(--gray);">PDF Document</span>
+          <a href="${publicUrl}" target="_blank" style="color:var(--red);font-size:0.75rem;text-decoration:none;border:1px solid rgba(192,21,15,0.3);padding:0.25rem 0.7rem;letter-spacing:0.08em;">&#8595; Download</a>
+        </div>
+        <iframe src="${publicUrl}" style="width:100%;height:640px;border:1px solid rgba(255,255,255,0.08);background:#fff;" title="Resume Preview"></iframe>`;
+    } else {
+      previewArea.innerHTML = `
+        <p style="color:var(--gray);font-size:0.84rem;margin-bottom:1rem;">Inline preview is only available for PDF files. This resume is a <strong style="color:var(--light)">${ext.toUpperCase()}</strong> file.</p>
+        <a href="${publicUrl}" target="_blank" style="color:var(--red);font-size:0.78rem;text-decoration:none;border:1px solid rgba(192,21,15,0.3);padding:0.4rem 1rem;letter-spacing:0.08em;">&#8595; Download ${ext.toUpperCase()}</a>`;
+    }
+  } else {
+    document.getElementById('dResume').textContent = '—';
   }
 
   // Gov requirements
@@ -359,6 +393,12 @@ async function saveUpdate() {
   if (app.deployment_start)   document.getElementById('deployStart').value       = app.deployment_start;
   if (app.rejection_reason)   document.getElementById('rejectionReason').value   = app.rejection_reason;
   onStatusChange();
+
+  } catch(e) {
+    document.getElementById('loadingMsg').style.display = 'none';
+    const el = document.getElementById('errorMsg');
+    el.textContent = 'Unexpected error: ' + e.message; el.style.display = 'block';
+  }
 })();
 </script>
 </body>
